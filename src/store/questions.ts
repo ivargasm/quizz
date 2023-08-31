@@ -6,7 +6,7 @@ import { persist } from 'zustand/middleware'
 interface State {
     questions: Question[]
     currentQuestion: number
-    fetchQuestions: (limit: number) => Promise<void>
+    fetchQuestions: (limit: number, url:string) => Promise<void>
     selectAnswer: (questionId: number, answerIndex: number) => void
     goNextQuestion: () => void
     goPrevQuestion: () => void
@@ -18,8 +18,9 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
     return{
         questions: [],
         currentQuestion: 0, //posicion del array de questions
-        fetchQuestions: async (limit: number) => {
-            const response = await fetch('http://localhost:5173/data.json')
+        fetchQuestions: async (limit: number, url: string) => {
+            // const response = await fetch('http://localhost:5173/data.json')
+            const response = await fetch(url)
             const json = await response.json()
 
             //revolver las preguntas

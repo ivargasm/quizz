@@ -32,13 +32,15 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
     
     return(
         <Card variant='outlined' sx={{textAlign:'left', bgcolor:'#222', p:2, marginTop: 4}}>
-            <Typography variant='h5'>
+            <Typography variant='h5' sx={{marginBottom:'10px'}}>
                 {info.question}
             </Typography>
 
-            <SyntaxHighlighter language='javascript' style={atomOneDark}>
-                {info.code}
-            </SyntaxHighlighter>
+            {info.code != null && 
+                <SyntaxHighlighter language='javascript' style={atomOneDark}>
+                    {info.code}
+                </SyntaxHighlighter>
+            }
 
             <List sx={{bgcolor: '#333'}} disablePadding>
                 {info.answers.map((answer, index) => (
