@@ -14,7 +14,7 @@ function App() {
         <Stack direction='row' gap={2} alignItems='center' justifyContent='center'>
           {/* <JavaScriptLogo /> */}
           {/* <CesbaLogo /> */}
-          <Typography variant='h2' component='h1'>CESBA Quizz</Typography>
+          <Typography variant='h2' component='h1'>StudyQuizArena</Typography>
         </Stack>
 
         {questions.length === 0 && <Start />} {/* renderizar el componente Start si no hay preguntas */}

@@ -1,4 +1,4 @@
-import { Button, TextField, Stack, MenuItem, Box } from "@mui/material"
+import { Button, TextField, Stack, MenuItem } from "@mui/material"
 import { useQuestionStore } from "./store/questions"
 import { useState, useEffect } from 'react';
 
@@ -7,34 +7,19 @@ export const Start = () => {
     // limite de preguntas
     const LIMIT_QUESTIONS = 10
     const [totalPreguntas, setTotalPreguntas] = useState(LIMIT_QUESTIONS);
-    const [degree, setDegree] = useState('derecho');
-    const [topic, setTopic] = useState('derecho administrativo');
+    const [degree, setDegree] = useState('');
+    const [topic, setTopic] = useState('');
     const [partial, setPartial] = useState('');
     const [url, setUrl] = useState('');
+    const [degrees, setDegrees] = useState([]);
+    const [topics, setTopics] = useState([]);
 
-    // obtener las carreras
-    const degrees = [
-        {
-            value: 'derecho',
-            label: 'Derecho',
-        },
-        {
-            value: 'sistemas computacionales',
-            label: 'SIstemas Computacionales',
-        },
-        {
-            value: 'administracion',
-            label: 'Administracion',
-        },
-    ];
-
-    // obtener las Materias
-    const topics = [
-        {
-            value: 'derecho administrativo',
-            label: 'Derecho Administrativo',
-        },
-    ];
+    // funcion para obtener valores desde la api
+    const fetchFromApi = async (route:string, degree:string, topic:string) => {
+        const response = await fetch(`http://localhost/api-quizz/${route}/${degree}/${topic}`);
+        const data = await response.json();
+        return data;
+    }
 
     // obtener las parciales
     const partials = [
@@ -80,7 +65,16 @@ export const Start = () => {
         }else{
             setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}`);
         }
-        console.log(url);
+
+        // obtener las carreras
+        fetchFromApi('degrees', degree, topic).then((data) => {
+            setDegrees(data);
+        })
+
+        // obtener las materias
+        fetchFromApi('topics', degree, topic).then((data) => {
+            setTopics(data);
+        })
 
     }, [url, degree, topic, partial]);
 
