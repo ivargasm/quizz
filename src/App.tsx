@@ -4,12 +4,14 @@ import './App.css'
 import { useQuestionStore } from './store/questions'
 import { Start } from './Start'
 import { Game } from './Game'
+// import { Nav } from './Nav'
 // import { CesbaLogo } from './assets/CesbaLogo'
 
 function App() {
   const questions = useQuestionStore(state => state.questions)
   return (
     <main>
+        {/* <Nav /> */}
       <Container maxWidth="sm">
         <Stack direction='row' gap={2} alignItems='center' justifyContent='center'>
           {/* <JavaScriptLogo /> */}

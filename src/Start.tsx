@@ -16,7 +16,7 @@ export const Start = () => {
 
     // funcion para obtener valores desde la api
     const fetchFromApi = async (route:string, degree:string, topic:string) => {
-        const response = await fetch(`http://localhost/api-quizz/${route}/${degree}/${topic}`);
+        const response = await fetch(`http://74.208.243.80/api-quizz/${route}/${degree}/${topic}`);
         const data = await response.json();
         return data;
     }
@@ -61,9 +61,9 @@ export const Start = () => {
     useEffect(() => {
         // configurar la url
         if(partial != ''){
-            setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${partial}`);
+            setUrl(`http://74.208.243.80/api-quizz/questions/${degree}/${topic}/${partial}`);
         }else{
-            setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}`);
+            setUrl(`http://74.208.243.80/api-quizz/questions/${degree}/${topic}`);
         }
 
         // obtener las carreras
