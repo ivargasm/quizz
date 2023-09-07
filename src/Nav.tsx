@@ -3,9 +3,9 @@
 export const Nav = () => {
 
     //identify the toggle switch HTML element
-    let theme = localStorage.getItem("theme")
+    // let theme = localStorage.getItem("theme")
 
-    document.documentElement.setAttribute('data-theme', theme)
+    // document.documentElement.setAttribute('data-theme', theme)
 
     const colorMode = () =>{
         if (document.documentElement.getAttribute("data-theme") === "dark") {
