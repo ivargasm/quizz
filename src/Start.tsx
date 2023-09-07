@@ -38,23 +38,23 @@ export const Start = () => {
     ];
 
     // obtener el numero de preguntas
-    const handleInputChange = (event) => {
+    const handleInputChange = (event:any) => {
         console.log(event.target.value);
         setTotalPreguntas(event.target.value);
     }
 
     // obtener la carrera
-    const handleDegreeChange = (event) => {
+    const handleDegreeChange = (event:any) => {
         setDegree(event.target.value);
     }
 
     // obtener la materia
-    const handleTopicChange = (event) => {
+    const handleTopicChange = (event:any) => {
         setTopic(event.target.value);
     }
 
     // obtener el parcial
-    const handlePartialChange = (event) => {
+    const handlePartialChange = (event:any) => {
         setPartial(event.target.value);
     }
 
@@ -100,15 +100,15 @@ export const Start = () => {
             <Stack direction='row' gap={3} alignItems='center' justifyContent='center'>
                 <TextField id="outlined-select-currency" select label="Opcion" defaultValue="" helperText="Selecciona tu carrera" onChange={handleDegreeChange}>
                     {degrees.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
+                        <MenuItem key={option['value']} value={option['value']}>
+                            {option['label']}
                         </MenuItem>
                     ))}
                 </TextField>
                 <TextField id="outlined-select-currency" select label="Opcion" defaultValue="" helperText="Selecciona la materia" onChange={handleTopicChange}>
                     {topics.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
+                        <MenuItem key={option['value']} value={option['value']}>
+                            {option['label']}
                         </MenuItem>
                     ))}
                 </TextField>
