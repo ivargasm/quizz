@@ -39,7 +39,6 @@ export const Start = () => {
 
     // obtener el numero de preguntas
     const handleInputChange = (event:any) => {
-        console.log(event.target.value);
         setTotalPreguntas(event.target.value);
     }
 
@@ -61,9 +60,9 @@ export const Start = () => {
     useEffect(() => {
         // configurar la url
         if(partial != ''){
-            setUrl(`http://74.208.243.80/api-quizz/questions/${degree}/${topic}/${partial}`);
+            setUrl(`juristechspace.com/api-quizz/questions/${degree}/${topic}/${partial}`);
         }else{
-            setUrl(`http://74.208.243.80/api-quizz/questions/${degree}/${topic}`);
+            setUrl(`juristechspace.com/api-quizz/questions/${degree}/${topic}`);
         }
 
         // obtener las carreras
