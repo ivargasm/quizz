@@ -16,7 +16,7 @@ export const Start = () => {
 
     // funcion para obtener valores desde la api
     const fetchFromApi = async (route:string, degree:string, topic:string) => {
-        const response = await fetch(`http://74.208.243.80/api-quizz/${route}/${degree}/${topic}`);
+        const response = await fetch(`juristechspace.com/api-quizz/${route}/${degree}/${topic}`);
         const data = await response.json();
         return data;
     }
