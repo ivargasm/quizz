@@ -16,7 +16,7 @@ export const Start = () => {
 
     // funcion para obtener valores desde la api
     const fetchFromApi = async (route:string, degree:string, topic:string) => {
-        const response = await fetch(`http://juristechspace.com/api-quizz/${route}/${degree}/${topic}`);
+        const response = await fetch(`https://juristechspace.com/api-quizz/${route}/${degree}/${topic}`);
         const data = await response.json();
         return data;
     }
@@ -60,9 +60,9 @@ export const Start = () => {
     useEffect(() => {
         // configurar la url
         if(partial != ''){
-            setUrl(`http://juristechspace.com/api-quizz/questions/${degree}/${topic}/${partial}`);
+            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${partial}`);
         }else{
-            setUrl(`http://juristechspace.com/api-quizz/questions/${degree}/${topic}`);
+            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}`);
         }
 
         // obtener las carreras
