@@ -7,7 +7,7 @@ interface State {
     questions: Question[]
     currentQuestion: number
     fetchQuestions: (limit: number, url:string) => Promise<void>
-    selectAnswer: (questionId: number, answerIndex: number) => void
+    selectAnswer: (questionId: string, answerIndex: string) => void
     goNextQuestion: () => void
     goPrevQuestion: () => void
     reset: () => void
@@ -19,7 +19,6 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         questions: [],
         currentQuestion: 0, //posicion del array de questions
         fetchQuestions: async (limit: number, url: string) => {
-            // const response = await fetch('http://localhost:5173/data.json')
             const response = await fetch(url)
             const json = await response.json()
 
@@ -30,7 +29,7 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
             set({questions})
         },
 
-        selectAnswer: (questionId: number, answerIndex: number) => {
+        selectAnswer: (questionId: string, answerIndex: string) => {
             const {questions} = get()
 
             // usar el structureclone para clonar el objeto completo
@@ -40,7 +39,7 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
             // recuperar la informacion
             const questionInfo = newQuestions[questionIndex]
             // verificar pregunta correcta
-            const isCorrectUserAnswer = questionInfo.correctAnswer == answerIndex
+            const isCorrectUserAnswer = questionInfo.correctAnswer === answerIndex
             if(isCorrectUserAnswer){
                 // lanzar confetti
                 confetti()

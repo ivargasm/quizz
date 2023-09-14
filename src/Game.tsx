@@ -8,15 +8,14 @@ import { Footer } from "./Footer"
 
 const getBackgroundColor = (info: QuestionType, index: number) => { // obtener el color de fondo de una respuesta
     const { userSelectedAnswer, correctAnswer } = info
-
     // usuario aun no selcciona una respuesta
     if(userSelectedAnswer == null) return 'transparent'
     // ya selecciono una respuesta y es la incorrecta
-    if(index !== correctAnswer && index !== userSelectedAnswer) return '#transparent'
+    if(index.toString() !== correctAnswer && index.toString() !== userSelectedAnswer) return '#transparent'
     // ya selecciono una respuesta y es la correcta
-    if(index == correctAnswer) return '#4caf50'
+    if(index.toString() === correctAnswer) return '#4caf50'
     // ya selecciono una respuesta y es la incorrecta
-    if(index == userSelectedAnswer) return '#f44336'
+    if(index.toString() === userSelectedAnswer) return '#f44336'
     // caso por defecto
     return 'transparent'
 }
@@ -24,7 +23,7 @@ const getBackgroundColor = (info: QuestionType, index: number) => { // obtener e
 
 const Question = ({ info }: { info: QuestionType }) => { // componente para mostrar una pregunta
     const selectAnswer = useQuestionStore(state => state.selectAnswer) // obtener la funcion para seleccionar una respuesta
-    const createHandleClick = (answerIndex: number) => () =>{ // crear una funcion que selecciona una respuesta
+    const createHandleClick = (answerIndex: string) => () =>{ // crear una funcion que selecciona una respuesta
         selectAnswer(info.id, answerIndex)
     }
     
@@ -44,7 +43,7 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
             <List sx={{bgcolor: '#333'}} disablePadding>
                 {info.answers.map((answer, index) => (
                     <ListItem key={index} disablePadding divider>
-                        <ListItemButton onClick={createHandleClick(index)} sx={{backgroundColor: getBackgroundColor(info, index)}} disabled={info.userSelectedAnswer != null}>
+                        <ListItemButton onClick={createHandleClick(index.toString())} sx={{backgroundColor: getBackgroundColor(info, index)}} disabled={info.userSelectedAnswer != null}>
                             <ListItemText primary={answer} sx={{textAlign:'center'}}/>
                         </ListItemButton>
                     </ListItem>
