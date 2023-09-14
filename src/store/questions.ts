@@ -40,7 +40,7 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
             // recuperar la informacion
             const questionInfo = newQuestions[questionIndex]
             // verificar pregunta correcta
-            const isCorrectUserAnswer = questionInfo.correctAnswer === answerIndex
+            const isCorrectUserAnswer = questionInfo.correctAnswer == answerIndex
             if(isCorrectUserAnswer){
                 // lanzar confetti
                 confetti()

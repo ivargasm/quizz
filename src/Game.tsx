@@ -14,16 +14,15 @@ const getBackgroundColor = (info: QuestionType, index: number) => { // obtener e
     // ya selecciono una respuesta y es la incorrecta
     if(index !== correctAnswer && index !== userSelectedAnswer) return '#transparent'
     // ya selecciono una respuesta y es la correcta
-    if(index === correctAnswer) return '#4caf50'
+    if(index == correctAnswer) return '#4caf50'
     // ya selecciono una respuesta y es la incorrecta
-    if(index === userSelectedAnswer) return '#f44336'
+    if(index == userSelectedAnswer) return '#f44336'
     // caso por defecto
     return 'transparent'
 }
 
 
 const Question = ({ info }: { info: QuestionType }) => { // componente para mostrar una pregunta
-
     const selectAnswer = useQuestionStore(state => state.selectAnswer) // obtener la funcion para seleccionar una respuesta
     const createHandleClick = (answerIndex: number) => () =>{ // crear una funcion que selecciona una respuesta
         selectAnswer(info.id, answerIndex)
