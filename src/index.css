@@ -448,3 +448,13 @@ h1.title{
     max-width: 90%;
   }
 }
+
+@media (max-width:460px) {
+  h1.title{
+    font-size: 2.3em;
+  }
+
+  .footer{
+    font-size: 1em;
+  }
+}
