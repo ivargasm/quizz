@@ -336,6 +336,7 @@ h1.title{
   font-family: var(--ff-ubuntu);
   font-size: 1.5em;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .code-block {
