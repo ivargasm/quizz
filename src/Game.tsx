@@ -1,9 +1,7 @@
-import { Card, Typography, List, ListItem, ListItemButton, ListItemText, Stack, IconButton } from "@mui/material"
 import { useQuestionStore } from "./store/questions"
 import { type Question as QuestionType } from "./store/type"
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import { ArrowForwardIos, ArrowBackIosNew } from "@mui/icons-material"
+import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Footer } from "./Footer"
 
 const getBackgroundColor = (info: QuestionType, index: number) => { // obtener el color de fondo de una respuesta
@@ -29,29 +27,30 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
     
     
     return(
-        <Card variant='outlined' sx={{textAlign:'left', bgcolor:'#222', p:2, marginTop: 4}}>
-            <Typography variant='h5' sx={{marginBottom:'10px'}}>
-                {info.question}
-            </Typography>
-
-            {info.code != null && 
-                <SyntaxHighlighter language='javascript' style={atomOneDark}>
-                    {info.code}
-                </SyntaxHighlighter>
-            }
-
-            <List sx={{bgcolor: '#333'}} disablePadding>
-                {info.answers.map((answer, index) => (
-                    <ListItem key={index} disablePadding divider>
-                        <ListItemButton onClick={createHandleClick(index.toString())} sx={{backgroundColor: getBackgroundColor(info, index)}} disabled={info.userSelectedAnswer != null}>
-                            <ListItemText primary={answer} sx={{textAlign:'center'}}/>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-
-            </List>
-
-        </Card>
+        <>
+            <div className="card">
+                <h2 className="card-title">{info.question}</h2>
+                {info.code != null && 
+                    <SyntaxHighlighter language='javascript' style={solarizedlight} className='code-block'>
+                        {info.code}
+                    </SyntaxHighlighter>
+                }
+                <ul className="custom-list">
+                    {info.answers.map((answer, index) => (
+                        <li key={index} className="custom-list-item">
+                            <button 
+                                className={`custom-list-button ${info.userSelectedAnswer != null ? 'disabled' : ''}`} 
+                                onClick={createHandleClick(index.toString())} 
+                                style={{backgroundColor: getBackgroundColor(info, index)}}
+                                disabled={info.userSelectedAnswer != null}
+                            >
+                            <span className="custom-list-text">{answer}</span>
+                        </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </>
     )
 }
 
@@ -65,15 +64,15 @@ export const Game = () => {
 
     return(
         <>
-            <Stack direction='row' gap={2} alignItems='center' justifyContent='center'>
-                <IconButton onClick={goPrevQuestion} disabled={currentQuestion === 0}>
-                    <ArrowBackIosNew />
-                </IconButton>
-                {currentQuestion+1}/{Questions.length}
-                <IconButton onClick={goNextQuestion} disabled={currentQuestion >= Questions.length-1}>
-                    <ArrowForwardIos />
-                </IconButton>
-            </Stack>
+            <div className="nav-stack">
+                <button className="nav-button" onClick={goPrevQuestion} disabled={currentQuestion === 0}>
+                    <i className="fa-solid fa-arrow-left"></i>
+                </button>
+                <span className="question-count">{currentQuestion+1}/{Questions.length}</span>
+                <button className="nav-button" onClick={goNextQuestion} disabled={currentQuestion >= Questions.length-1}>
+                    <i className="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
             <Question info={questionInfo} /> {/* mostrar la pregunta actual */}
             <Footer /> {/* mostrar el footer */}
         </>

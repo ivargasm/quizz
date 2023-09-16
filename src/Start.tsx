@@ -1,6 +1,5 @@
-import { Button, TextField, Stack, MenuItem } from "@mui/material"
 import { useQuestionStore } from "./store/questions"
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 
 export const Start = () => {
@@ -13,6 +12,16 @@ export const Start = () => {
     const [url, setUrl] = useState('');
     const [degrees, setDegrees] = useState([]);
     const [topics, setTopics] = useState([]);
+    const [isOpenDegree, setIsOpenDegree] = useState(false)
+    const [isOpenTopic, setIsOpenTopic] = useState(false)
+    const [isOpenPartial, setIsOpenPartial] = useState(false)
+    const [selectedOptionDegree, setSelectedOptionDegree] = useState('Opción')
+    const [selectedOptionTopic, setSelectedOptionTopic] = useState('Opción')
+    const [selectedOptionPartial, setSelectedOptionPartial] = useState('Opción')
+    
+    const dropdowndegree = useRef<any>(null)
+    const dropdowntopic = useRef<any>(null)
+    const dropdownpartial = useRef<any>(null)
 
     // funcion para obtener valores desde la api
     const fetchFromApi = async (route:string, degree:string, topic:string) => {
@@ -43,18 +52,24 @@ export const Start = () => {
     }
 
     // obtener la carrera
-    const handleDegreeChange = (event:any) => {
-        setDegree(event.target.value);
+    const handleDegreeChange = (value_degree: string, value_id: string) => {
+        setDegree(value_id);
+        setSelectedOptionDegree(value_degree)
+        setIsOpenDegree(false);
     }
 
     // obtener la materia
-    const handleTopicChange = (event:any) => {
-        setTopic(event.target.value);
+    const handleTopicChange = (value_topic: string, value_id: string) => {
+        setTopic(value_id);
+        setSelectedOptionTopic(value_topic)
+        setIsOpenTopic(false);
     }
 
     // obtener el parcial
-    const handlePartialChange = (event:any) => {
-        setPartial(event.target.value);
+    const handlePartialChange = (value_partial: string, value_id: string) => {
+        setPartial(value_id)
+        setSelectedOptionPartial(value_partial)
+        setIsOpenPartial(false);
     }
 
     useEffect(() => {
@@ -75,7 +90,26 @@ export const Start = () => {
             setTopics(data);
         })
 
+        document.addEventListener("click", closeDropdown);
+        return () => {
+            document.removeEventListener("click", closeDropdown);
+        }
+
     }, [url, degree, topic, partial]);
+
+    const closeDropdown = (event:any) => {
+        if (dropdowndegree.current && !dropdowndegree.current.contains(event.target)) {
+            setIsOpenDegree(false);
+        }
+
+        if (dropdowntopic.current && !dropdowntopic.current.contains(event.target)) {
+            setIsOpenTopic(false);
+        }
+
+        if (dropdownpartial.current && !dropdownpartial.current.contains(event.target)) {
+            setIsOpenPartial(false);
+        }
+    };
 
 
 
@@ -88,37 +122,62 @@ export const Start = () => {
     }
     return (
         <>
-            <Stack direction='row' gap={4} alignItems='center' justifyContent='center' marginBottom={4}>
-                <Button onClick={handleClick} variant="contained">
-                    ¡Empezar!
-                </Button>
+            <div className="content-stacks">
+                <div className="stack">
+                    <button className="btn" onClick={handleClick}>¡Empezar!</button>
+                    <input type="number" className="generic_input" placeholder="# preguntas" onChange={handleInputChange}/>
+                </div>
+                
+                <div className="stack sm">
+                    <div className="content-select">
+                        <div className="custom-dropdown" ref={dropdowndegree}>
+                            <div className="selected-option" onClick={() => setIsOpenDegree(!isOpenDegree)}>
+                                {selectedOptionDegree}
+                            </div>
+                            {isOpenDegree && (
+                                <ul className="options-list">
+                                    {degrees.map((item) => (
+                                        <li data-value={item['value']} key={item['value']} onClick={() => handleDegreeChange(item['label'], item['value'])}>{item['label']}</li>
+                                    ))}                        
+                                </ul>
+                            )}
+                        </div>
+                        <label className="label-msg">Carrera</label>
+                    </div>
 
-                <TextField label="# preguntas" variant="standard" type="number" onChange={handleInputChange} sx={{ m: 1, width: '15ch' }} />
+                    <div className="content-select">
+                        <div className="custom-dropdown" ref={dropdowntopic}>
+                            <div className="selected-option" onClick={() => setIsOpenTopic(!isOpenTopic)}>
+                                {selectedOptionTopic}
+                            </div>
+                            {isOpenTopic && (
+                                <ul className="options-list">
+                                    {topics.map((item) => (
+                                        <li data-value={item['value']} key={item['value']} onClick={() => handleTopicChange(item['label'], item['value'])}>{item['label']}</li>
+                                    ))}                        
+                                </ul>
+                            )}
+                        </div>
+                        <label className="label-msg">Materia</label>
+                    </div>
 
-            </Stack>
-            <Stack direction='row' gap={3} alignItems='center' justifyContent='center'>
-                <TextField id="outlined-select-currency" select label="Opcion" defaultValue="" helperText="Selecciona tu carrera" onChange={handleDegreeChange}>
-                    {degrees.map((option) => (
-                        <MenuItem key={option['value']} value={option['value']}>
-                            {option['label']}
-                        </MenuItem>
-                    ))}
-                </TextField>
-                <TextField id="outlined-select-currency" select label="Opcion" defaultValue="" helperText="Selecciona la materia" onChange={handleTopicChange}>
-                    {topics.map((option) => (
-                        <MenuItem key={option['value']} value={option['value']}>
-                            {option['label']}
-                        </MenuItem>
-                    ))}
-                </TextField>
-                <TextField id="outlined-select-currency" select label="Opcion" defaultValue="" helperText="Selecciona el parcial" onChange={handlePartialChange}>
-                    {partials.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
-            </Stack>
+                    <div className="content-select">
+                        <div className="custom-dropdown" ref={dropdownpartial}>
+                            <div className="selected-option" onClick={() => setIsOpenPartial(!isOpenPartial)}>
+                                {selectedOptionPartial}
+                            </div>
+                            {isOpenPartial && (
+                                <ul className="options-list">
+                                    {partials.map((item) => (
+                                        <li data-value={item.value} key={item.value} onClick={() => handlePartialChange(item.label, item.value)}>{item.label}</li>
+                                    ))}                        
+                                </ul>
+                            )}
+                        </div>
+                        <label className="label-msg">Parcial</label>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

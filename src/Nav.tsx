@@ -3,9 +3,9 @@
 export const Nav = () => {
 
     //identify the toggle switch HTML element
-    // let theme = localStorage.getItem("theme")
-
-    // document.documentElement.setAttribute('data-theme', theme)
+    let theme = localStorage.getItem("theme") || "light"
+    
+    document.documentElement.setAttribute('data-theme', theme)
 
     const colorMode = () =>{
         if (document.documentElement.getAttribute("data-theme") === "dark") {
@@ -31,9 +31,9 @@ export const Nav = () => {
                         <i className="bi bi-circle-half"></i>
                     </button>
                 </div>
-                {/* <div className="menu-btn">
+                <div className="menu-btn">
                     <i className="fas fa-bars" id="navbtn"></i>
-                </div> */}
+                </div>
             </div>
         </nav>
     )
