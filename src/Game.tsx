@@ -37,7 +37,7 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
                 }
                 <ul className="custom-list">
                     {info.answers.map((answer, index) => (
-                        <li key={index} className="custom-list-item">
+                        <li key={`${info.id}-${index}`} className="custom-list-item">
                             <button 
                                 className={`custom-list-button ${info.userSelectedAnswer != null ? 'disabled' : ''}`} 
                                 onClick={createHandleClick(index.toString())} 
