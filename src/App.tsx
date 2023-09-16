@@ -1,5 +1,3 @@
-import { Container, Stack, Typography } from '@mui/material'
-// import './App.css'
 // import { JavaScriptLogo } from './assets/JavaScriptLogo'
 import { useQuestionStore } from './store/questions'
 import { Start } from './Start'

@@ -9,23 +9,28 @@ export const Start = () => {
     const [degree, setDegree] = useState('');
     const [topic, setTopic] = useState('');
     const [partial, setPartial] = useState('');
+    const [user, setUser] = useState('');
     const [url, setUrl] = useState('');
     const [degrees, setDegrees] = useState([]);
     const [topics, setTopics] = useState([]);
+    const [users, setUsers] = useState([]);
     const [isOpenDegree, setIsOpenDegree] = useState(false)
     const [isOpenTopic, setIsOpenTopic] = useState(false)
     const [isOpenPartial, setIsOpenPartial] = useState(false)
+    const [isOpenUser, setIsOpenUser] = useState(false)
     const [selectedOptionDegree, setSelectedOptionDegree] = useState('Opción')
     const [selectedOptionTopic, setSelectedOptionTopic] = useState('Opción')
     const [selectedOptionPartial, setSelectedOptionPartial] = useState('Opción')
+    const [selectedOptionUser, setSelectedOptionUser] = useState('Opción')
     
     const dropdowndegree = useRef<any>(null)
     const dropdowntopic = useRef<any>(null)
     const dropdownpartial = useRef<any>(null)
+    const dropdownuser = useRef<any>(null)
 
     // funcion para obtener valores desde la api
-    const fetchFromApi = async (route:string, degree:string, topic:string) => {
-        const response = await fetch(`https://juristechspace.com/api-quizz/${route}/${degree}/${topic}`);
+    const fetchFromApi = async (route:string, degree:string, topic:string, user:string) => {
+        const response = await fetch(`https://juristechspace.com/api-quizz/${route}/${degree}/${topic}/${user}`);
         const data = await response.json();
         return data;
     }
@@ -72,30 +77,41 @@ export const Start = () => {
         setIsOpenPartial(false);
     }
 
+    // obtener el usuario
+    const handleUserChange = (value_User: string, value_id: string) => {
+        setUser(value_id)
+        setSelectedOptionUser(value_User)
+        setIsOpenUser(false);
+    }
+
     useEffect(() => {
         // configurar la url
         if(partial != ''){
-            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${partial}`);
+            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}/${partial}`);
         }else{
-            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}`);
+            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}`);
         }
 
         // obtener las carreras
-        fetchFromApi('degrees', degree, topic).then((data) => {
+        fetchFromApi('degrees', degree, topic, user).then((data) => {
             setDegrees(data);
         })
 
         // obtener las materias
-        fetchFromApi('topics', degree, topic).then((data) => {
+        fetchFromApi('topics', degree, topic, user).then((data) => {
             setTopics(data);
+        })
+
+        // obtener los usuarios
+        fetchFromApi('users', degree, topic, user).then((data) => {
+            setUsers(data);
         })
 
         document.addEventListener("click", closeDropdown);
         return () => {
             document.removeEventListener("click", closeDropdown);
         }
-
-    }, [url, degree, topic, partial]);
+    }, [url, degree, topic, partial, user]);
 
     const closeDropdown = (event:any) => {
         if (dropdowndegree.current && !dropdowndegree.current.contains(event.target)) {
@@ -108,6 +124,10 @@ export const Start = () => {
 
         if (dropdownpartial.current && !dropdownpartial.current.contains(event.target)) {
             setIsOpenPartial(false);
+        }
+
+        if (dropdownuser.current && !dropdownuser.current.contains(event.target)) {
+            setIsOpenUser(false);
         }
     };
 
@@ -175,6 +195,22 @@ export const Start = () => {
                             )}
                         </div>
                         <label className="label-msg">Parcial</label>
+                    </div>
+
+                    <div className="content-select">
+                        <div className="custom-dropdown" ref={dropdownuser}>
+                            <div className="selected-option" onClick={() => setIsOpenUser(!isOpenUser)}>
+                                {selectedOptionUser}
+                            </div>
+                            {isOpenUser && (
+                                <ul className="options-list">
+                                    {users.map((item) => (
+                                        <li data-value={item['value']} key={item['value']} onClick={() => handleUserChange(item['label'], item['value'])}>{item['label']}</li>
+                                    ))}                        
+                                </ul>
+                            )}
+                        </div>
+                        <label className="label-msg">Creador</label>
                     </div>
                 </div>
             </div>
