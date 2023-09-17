@@ -176,7 +176,8 @@ body {
   border-radius: 5px;
 }
 
-.options-list {
+.options-list {  
+  color: var(--clr-text);
   list-style-type: none;
   margin: 0;
   padding: 0;
