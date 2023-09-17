@@ -3,6 +3,7 @@ import { type Question as QuestionType } from "./store/type"
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Footer } from "./Footer"
+import React from 'react'
 
 const getBackgroundColor = (info: QuestionType, index: number) => { // obtener el color de fondo de una respuesta
     const { userSelectedAnswer, correctAnswer } = info
@@ -44,7 +45,15 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
                                 style={{backgroundColor: getBackgroundColor(info, index)}}
                                 disabled={info.userSelectedAnswer != null}
                             >
-                            <span className="custom-list-text">{answer}</span>
+                            {/* <span className="custom-list-text">{answer}</span> */}
+                            <span className="custom-list-text">
+                                {answer.split('\n').map((line, lineIndex) => (
+                                    <React.Fragment key={lineIndex}>
+                                        {line}
+                                        {lineIndex !== answer.split('\n').length - 1 && <br />}
+                                    </React.Fragment>
+                                ))}
+                            </span>
                         </button>
                         </li>
                     ))}
