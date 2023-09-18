@@ -20,6 +20,7 @@
     --clr-color-sadow: rgba(0, 0, 0, 0.5);
     --clr-bg-card-code: #FDF6E3;
     --clr-color-hover-card: #f4e8c9;
+    --clr-color-bg-modal: rgba(255, 255, 255, 0.3);
 }
 
 /* VARIABLES DARK */
@@ -38,6 +39,7 @@
     --clr-color-sadow: rgba(76, 75, 75, 0.5);
     --clr-bg-card-code: #606060;
     --clr-color-hover-card: #949090;
+    --clr-color-bg-modal: rgba(0, 0, 0, 0.3);
 }
 
 *,
@@ -62,6 +64,12 @@ html {
 body {
     font-family: var(--ff-poppins);
     background-color: var(--clr-bg);
+    height: 100vh;
+}
+
+#root{
+  height: 100%;
+  position: relative;
 }
 
 .title {
@@ -210,7 +218,6 @@ main {
   align-items: center;
   gap: 2em;
   padding-top: 100px;
-  height: 100%;
 }
 
 h1.title{
@@ -431,6 +438,125 @@ h1.title{
   color: var(--clr-text);
 }
 
+/* Modal */
+.open-modal {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(4px);
+  background-color: var(--clr-color-bg-modal);
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.modal-content{
+  position: relative;
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  width: 550px;
+  max-width: 90%;
+  height: auto;
+  padding: 1.5rem;
+  border-radius: 8px;
+  animation-name: modal;
+  animation-duration: .5s;
+  box-shadow: 0 5px 16px -5px rgba(0,0,0,.4);
+  z-index: 10;
+  & p{
+      font-weight: 400;
+      & a{
+          color: #4d7be6;
+      }
+  }
+  & .modal-title{
+      font-weight: 600;
+      font-size: 2em;
+      margin-bottom: 1em;
+  }
+  & .close-modal{
+      position: absolute;
+      border-radius: 50%;
+      top: -15px;
+      right: -15px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #eee;
+      cursor: pointer;
+      background-color: var(--clr-main);
+  }
+}
+
+@keyframes modal{
+  from{
+      transform: translateY(50vh);
+  }
+  to{
+      transform: translateY(0);
+  }
+}
+
+.close{
+  transition: transform 1s cubic-bezier(0, -.42, 1 ,-.41);
+  transform: translateY(60vh);
+}
+
+.wave {
+  animation-name: wave-animation;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+  transform-origin: 70% 70%;
+  display: inline-block;
+}
+
+@keyframes wave-animation {
+  0% {
+      transform: rotate(0.0deg)
+  }
+
+  10% {
+      transform: rotate(14.0deg)
+  }
+
+  /* The following five values can be played with to make the waving more or less extreme */
+  20% {
+      transform: rotate(-8.0deg)
+  }
+
+  30% {
+      transform: rotate(14.0deg)
+  }
+
+  40% {
+      transform: rotate(-4.0deg)
+  }
+
+  50% {
+      transform: rotate(10.0deg)
+  }
+
+  60% {
+      transform: rotate(0.0deg)
+  }
+
+  /* Reset for the last half to pause */
+  100% {
+      transform: rotate(0.0deg)
+  }
+}
+
 
 
 /* Responsive */
@@ -459,6 +585,10 @@ h1.title{
   .footer{
     font-size: .8em;
   }
+
+  .modal {
+    margin-top: 50px;
+  }
 }
 
 @media (max-width:360px) {
@@ -468,5 +598,9 @@ h1.title{
 
   .footer{
     font-size: .7em;
+  }
+
+  .modal {
+    margin-top: 100px;
   }
 }

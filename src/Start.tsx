@@ -1,3 +1,4 @@
+import { Modal } from "./Modal";
 import { useQuestionStore } from "./store/questions"
 import { useState, useEffect, useRef } from 'react';
 
@@ -22,6 +23,7 @@ export const Start = () => {
     const [selectedOptionTopic, setSelectedOptionTopic] = useState('Opción')
     const [selectedOptionPartial, setSelectedOptionPartial] = useState('Opción')
     const [selectedOptionUser, setSelectedOptionUser] = useState('Opción')
+    const [mostrar, setMostrar] = useState(false)
     
     const dropdowndegree = useRef<any>(null)
     const dropdowntopic = useRef<any>(null)
@@ -216,6 +218,8 @@ export const Start = () => {
                         <label className="label-msg">Creador</label>
                     </div>
                 </div>
+                <Modal isOpen={mostrar} onClose={() => setMostrar(false)}/>
+                <button className="btn open-modal" onClick={() => setMostrar(true)}>Hola 👋</button>
             </div>
         </>
     )
