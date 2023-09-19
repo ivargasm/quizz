@@ -218,7 +218,10 @@ export const Start = () => {
                         <label className="label-msg">Creador</label>
                     </div>
                 </div>
-                <Modal isOpen={mostrar} onClose={() => setMostrar(false)}/>
+                <Modal isOpen={mostrar} onClose={() => setMostrar(false)}>
+                    ¡Hola comunidad de StudyQuizArena! Estamos buscando colaboradores apasionados que quieran contribuir y enriquecer nuestra base de cuestionarios. Si tienes conocimientos en alguna carrera o materia y te gustaría ayudar a otros a prepararse y evaluar sus conocimientos, ¡nos encantaría escuchar de ti! Tu colaboración puede marcar la diferencia en la preparación académica de muchos. Ponte en contacto con nosotros y sé parte de esta emocionante aventura educativa. ¡Gracias por ser parte de StudyQuizArena!
+                    <br /><a href="mailto:contacto@ismaelvm.xyz">contacto@ismaelvm.xyz</a>
+                </Modal>
                 <button className="btn open-modal" onClick={() => setMostrar(true)}>Hola 👋</button>
             </div>
         </>

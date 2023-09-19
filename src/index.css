@@ -441,8 +441,8 @@ h1.title{
 /* Modal */
 .open-modal {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 50px;
+  right: 40px;
 }
 
 .modal {
