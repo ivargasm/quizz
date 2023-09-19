@@ -589,6 +589,10 @@ h1.title{
   .modal {
     margin-top: 50px;
   }
+
+  .card {
+    min-width: 90%;
+  }
 }
 
 @media (max-width:360px) {
