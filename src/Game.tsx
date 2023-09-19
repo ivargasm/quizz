@@ -1,7 +1,7 @@
 import { useQuestionStore } from "./store/questions"
 import { type Question as QuestionType } from "./store/type"
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { atomOneDark, stackoverflowLight } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import { Footer } from "./Footer"
 import React from 'react'
 
@@ -19,20 +19,19 @@ const getBackgroundColor = (info: QuestionType, index: number) => { // obtener e
     return 'transparent'
 }
 
-
 const Question = ({ info }: { info: QuestionType }) => { // componente para mostrar una pregunta
     const selectAnswer = useQuestionStore(state => state.selectAnswer) // obtener la funcion para seleccionar una respuesta
     const createHandleClick = (answerIndex: string) => () =>{ // crear una funcion que selecciona una respuesta
         selectAnswer(info.id, answerIndex)
-    }
-    
+    }    
+    let theme = useQuestionStore(state => state.theme) // obtener el tema
     
     return(
         <>
             <div className="card">
                 <h2 className="card-title">{info.question}</h2>
                 {info.code != null && 
-                    <SyntaxHighlighter language='javascript' style={solarizedlight} className='code-block'>
+                    <SyntaxHighlighter language='javascript' style={theme === 'light' ? stackoverflowLight : atomOneDark} className='code-block'>
                         {info.code}
                     </SyntaxHighlighter>
                 }
@@ -46,15 +45,15 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
                                 disabled={info.userSelectedAnswer != null}
                             >
                             {/* <span className="custom-list-text">{answer}</span> */}
-                            <span className="custom-list-text">
-                                {answer.split('\n').map((line, lineIndex) => (
-                                    <React.Fragment key={lineIndex}>
-                                        {line}
-                                        {lineIndex !== answer.split('\n').length - 1 && <br />}
-                                    </React.Fragment>
-                                ))}
-                            </span>
-                        </button>
+                                <span className="custom-list-text">
+                                    {answer.split('\n').map((line, lineIndex) => (
+                                        <React.Fragment key={lineIndex}>
+                                            {line}
+                                            {lineIndex !== answer.split('\n').length - 1 && <br />}
+                                        </React.Fragment>
+                                    ))}
+                                </span>
+                            </button>
                         </li>
                     ))}
                 </ul>

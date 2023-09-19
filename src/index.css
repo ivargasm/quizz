@@ -334,6 +334,7 @@ h1.title{
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px var(--clr-color-sadow);
+  min-width: 400px;
   max-width: 70%;
   margin: 20px auto;
   background-color: var(--clr-bg-90);
@@ -348,10 +349,9 @@ h1.title{
 }
 
 .code-block {
-  background-color: var(--clr-bg-card-code) !important;
+  border-radius: 5px 5px 0 0;
+  padding: 10px !important;
   & span {
-    color: var(--clr-text);
-    font-family: var(--ff-ubuntu) !important;
     border-radius: 5px;
   }
 } 
@@ -359,7 +359,7 @@ h1.title{
 .custom-list {
   background-color: var(--clr-bg-card-code);
   list-style-type: none;
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
 }
 
 .custom-list-item {

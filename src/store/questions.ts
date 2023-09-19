@@ -11,6 +11,8 @@ interface State {
     goNextQuestion: () => void
     goPrevQuestion: () => void
     reset: () => void
+    toggleTheme: () => void
+    theme: string
 }
 
 // crear el estado global
@@ -74,7 +76,17 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
 
         reset: () => {
             set({questions: [], currentQuestion: 0})
-        }
+        },
+
+        toggleTheme: () => {
+            const currentTheme = get().theme
+            const newTheme = currentTheme === "dark" ? "light" : "dark"
+            localStorage.setItem('theme', newTheme)
+            document.documentElement.setAttribute('data-theme', newTheme)
+            set({ theme: newTheme })
+        },
+
+        theme:  localStorage.getItem("theme") || "light"
     }
 },{
     name: 'questions' //se puede agegar el lugar donde guardar, por default es localStorage

@@ -17,7 +17,7 @@ function App() {
           </div>
           {questions.length === 0 && <Start />} {/* renderizar el componente Start si no hay preguntas */}
           {questions.length > 0 && <Game />} {/* rederizar el componente Game si hay preguntas */}
-          </section>
+        </section>
       </main>
     </>
   )
