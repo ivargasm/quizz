@@ -1,46 +1,48 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap");
 
-:root {
 
-    /* VARIABLES */
-    --ff-poppins: 'Poppins';
-    --ff-ubuntu: 'ubuntu';
-    --clr-bg: #F7F8F8;
-    --clr-bg-90: #ececec;
-    --clr-text: #1c1c1c;
-    --clr-gray: #bababa;
-    --clr-gray-alt: #e0e0e0;
-    --clr-details: #4d7be6;
-    --clr-main: #4d7be6;
-    --clr-btn: #1976d2;
-    --clr-btn-text: #e0e0e0;
-    --clr-brackets: #606060;
-    --clr-color-hover: #1565c0;
-    --clr-color-labels: rgba(0, 0, 0, 0.6);
-    --clr-color-sadow: rgba(0, 0, 0, 0.5);
-    --clr-bg-card-code: #FDF6E3;
-    --clr-color-hover-card: #f4e8c9;
-    --clr-color-bg-modal: rgba(255, 255, 255, 0.3);
+/* VARIABLES LIGHT */
+:root {
+  --ff-poppins: 'Poppins';
+  --ff-ubuntu: 'ubuntu';
+  --clr-bg: #FAFAFA;
+  --clr-bg-90: #EFEFEF;
+  --clr-text: #333333;
+  --clr-gray: #B0B0B0;
+  --clr-gray-alt: #D8D8D8;
+  --clr-details: #5784BA;
+  --clr-main: #4A74A5;
+  --clr-btn: #4A74A5;
+  --clr-btn-text: #FFFFFF;
+  --clr-brackets: #666666;
+  --clr-color-hover: #3A5C8A;
+  --clr-color-labels: rgba(0, 0, 0, 0.6);
+  --clr-color-shadow: rgba(0, 0, 0, 0.1);
+  --clr-bg-card-code: #F6F2E6;
+  --clr-color-hover-card: #ECE6D4;
+  --clr-color-bg-modal: rgba(255, 255, 255, 0.4);
 }
+
 
 /* VARIABLES DARK */
 [data-theme="dark"] {
-    --clr-bg: #111B22;
-    --clr-bg-90: #0D161C;
-    --clr-text: #C6CDCD;
-    --clr-gray: #606060;
-    --clr-gray-alt: #2d2d2d;
-    --clr-main: #C6CDCD;
-    --clr-btn: #90091d;
-    --clr-btn-text: #e0e0e0;
-    --clr-brackets: #ececec;
-    --clr-color-hover: #6b0514;
-    --clr-color-labels: rgba(255, 255, 255, 0.6);
-    --clr-color-sadow: rgba(76, 75, 75, 0.5);
-    --clr-bg-card-code: #606060;
-    --clr-color-hover-card: #949090;
-    --clr-color-bg-modal: rgba(0, 0, 0, 0.3);
+  --clr-bg: #181C21;
+  --clr-bg-90: #12171B;
+  --clr-text: #D6D6D6;
+  --clr-gray: #707070;
+  --clr-gray-alt: #2B3036;
+  --clr-main: #8DABD4;
+  --clr-btn: #7189A1;
+  --clr-btn-text: #EFEFEF;
+  --clr-brackets: #E8E8E8;
+  --clr-color-hover: #637B91;
+  --clr-color-labels: rgba(255, 255, 255, 0.7);
+  --clr-color-shadow: rgba(0, 0, 0, 0.5);
+  --clr-bg-card-code: #4E565D;
+  --clr-color-hover-card: #3D454B;
+  --clr-color-bg-modal: rgba(0, 0, 0, 0.7);
 }
+
 
 *,
 *:after,
@@ -90,14 +92,17 @@ body {
   justify-content: center;
   height: 100%;
   margin-bottom: 2em;
+  width: 100%;
 }
 
-.content-stacks {
+.content-stacks, .topics {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2em;
+  width: inherit;
+  margin-top: 2em;
 }
 
 .stack{
@@ -439,11 +444,9 @@ h1.title{
 }
 
 /* Modal */
-.open-modal {
-  position: absolute;
-  bottom: 50px;
-  right: 40px;
-}
+/* .open-modal {
+  
+} */
 
 .modal {
   width: 100%;
@@ -557,9 +560,152 @@ h1.title{
   }
 }
 
+/* cardDegree */
+.card-category{
+	display: flex;
+  flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+  gap: 2rem;
+	& .card-degree{ /*  si se modifica la altuta eso se suma o resta en  .intro[bottom] y hove.intro[bottom]*/ 
+		margin: 50px 0;
+    height: 300px;
+		box-shadow: 5px 5px 20px black;
+		position: relative;
+		border-radius: 3px;
+    padding: 0;
+    width: 300px;
+		& img{
+			max-width: 100%;
+			border-radius: 3px;
+      object-fit: cover;
+		}
+		.intro {
+			height: 70px;
+			padding: 6px;
+			box-sizing: border-box;
+			background-color: rgba(27, 27, 27, .5);
+			color: white;
+			transition: all .5s;
+			margin-top: -77px;
+			border-radius: 0 0 3px 3px;
+			position: absolute;
+			width: 100%;
+			& div{
+        margin: auto;
+				text-align: center;
+				font-size: 40px;
+			}
+		}
+
+		&:hover{
+			cursor: pointer;
+			& img{
+				transform: scale(1.1);
+			}
+			& .intro{
+				margin-top: -65px;
+				transform: scale(1.1);
+			}
+		}
+	}
+}
+
+.grid-content {
+  width: 100%;
+  display: grid;
+  place-content: center;
+  & .sub-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, max-content)); /* Crea siempre 4 columnas */
+    gap: 2rem;
+    justify-content: center; /* Esto centra los items dentro del sub-grid */
+    & .grid-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+/* CardTopis */
+.topics, .partials{
+  gap: 0;
+}
+
+.partials{
+  & .topic{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.topic.selected {
+  background-color: var(--clr-main) !important;  /* Puedes cambiar este color por el que prefieras */
+  color: white;
+}
+
+.title-topics {
+  color: var(--clr-main);
+  font-weight: 400;
+  text-align: center;
+}
+
+.topics-container{
+  color: var(--clr-text);
+  padding: 25px 10px;
+  border-radius: 3px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  &:hover{
+    cursor: pointer;
+  }
+  & .topic{
+    background-color: var(--clr-bg-card-code);
+    padding: 12px;
+    border-radius: 4px;
+    &:hover{
+      background-color: var(--clr-color-hover-card);
+    }
+    & h3{
+      font-weight: 400;
+    }
+  }
+}
+
 
 
 /* Responsive */
+
+@media (max-width: 1000px) {
+  .sub-grid {
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 columnas para pantallas medianas */
+  }
+}
+
+@media (max-width: 800px) {
+  .card {
+    min-width: 350px;
+  }
+  
+}
+
+@media (max-width: 700px) {
+  .card {
+    min-width: 300px;
+  }
+  
+}
+
 @media (max-width:600px) {
   .stack.sm{
     flex-direction: column;
@@ -574,6 +720,18 @@ h1.title{
 
   .card {
     max-width: 90%;
+  }
+
+  .sub-grid {
+    grid-template-columns: 1fr !important; /* 1 columna para pantallas pequeñas */
+  }
+
+  .card-category{
+    gap: 1rem;
+  }
+
+  .card-degree{
+    margin: 20px 0 !important;
   }
 }
 
@@ -591,6 +749,10 @@ h1.title{
   }
 
   .card {
+    min-width: 90%;
+  }
+
+  .card-degree {
     min-width: 90%;
   }
 }

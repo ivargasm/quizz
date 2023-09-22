@@ -1,8 +1,8 @@
-import { useQuestionStore } from "./store/questions"
-import { type Question as QuestionType } from "./store/type"
+import { useQuestionStore } from "../store/questions"
+import { type Question as QuestionType } from "../store/type"
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark, stackoverflowLight } from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import { Footer } from "./Footer"
+import { Footer } from "../Footer"
 import React from 'react'
 
 const getBackgroundColor = (info: QuestionType, index: number) => { // obtener el color de fondo de una respuesta

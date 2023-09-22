@@ -3,6 +3,12 @@ import {type Question} from "./type"
 import confetti from 'canvas-confetti'
 import { persist } from 'zustand/middleware'
 
+interface Degree {
+    value: string;
+    label: string;
+}
+
+
 interface State {
     questions: Question[]
     currentQuestion: number
@@ -13,6 +19,21 @@ interface State {
     reset: () => void
     toggleTheme: () => void
     theme: string
+    degree: string
+    topic: string
+    partial: string
+    user: string
+    availableDegrees: Degree[]
+    availableTopics: string[]
+    availablePartials: string[]
+    availableUsers: string[]
+    selectDegree: (degree: string) => void
+    selectTopic: (topic: string) => void
+    selectPartial: (partial: string) => void
+    selectUser: (user: string) => void
+    fetchAvailableDegrees: () => Promise<void>
+    fetchAvailableTopics: (degree: string) => Promise<void>
+    fetchAvailableUsers: (degree: string, topic: string) => Promise<void>
 }
 
 // crear el estado global
@@ -75,7 +96,13 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         },
 
         reset: () => {
-            set({questions: [], currentQuestion: 0})
+            set({questions: [],
+                currentQuestion: 0,
+                degree: '',
+                topic: '',
+                partial: '',
+                user: '',
+            })
         },
 
         toggleTheme: () => {
@@ -86,7 +113,59 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
             set({ theme: newTheme })
         },
 
-        theme:  localStorage.getItem("theme") || "light"
+        theme:  localStorage.getItem("theme") || "light",
+
+        selectDegree: (degree: string) => {
+            set({ degree })
+            // Después de establecer un grado, puedes querer restablecer las otras selecciones:
+            set({ topic: '', user: '', partial: '' })
+        },
+
+        selectTopic: (topic: string) => {
+            set({ topic })
+            // Después de establecer un tema, puedes querer restablecer las otras selecciones
+            set({ user: '', partial: '' })
+        },
+
+        selectPartial: (partial: string) => {
+            set({ partial })
+        },
+
+        selectUser: (user: string) => {
+            set({ user })
+            // Después de establecer un tema, puedes querer restablecer las otras selecciones
+            set({ partial: '' })
+        },
+
+        fetchAvailableDegrees: async () => {
+            // Suponiendo que tienes una API para esto:
+            // const response = await fetch('https://juristechspace.com/api-quizz/degrees/')
+            const response = await fetch('http://localhost/api-quizz/degrees/')
+            const degrees = await response.json()
+            set({ availableDegrees: degrees })
+        },
+        
+        fetchAvailableTopics: async (degree: string) => {
+            // const response = await fetch(`https://juristechspace.com/api-quizz/topics/${degree}`)
+            const response = await fetch(`http://localhost/api-quizz/topics/${degree}`)
+            const topics = await response.json()
+            set({ availableTopics: topics })
+        },
+
+        fetchAvailableUsers: async (degree: string, topic: string) => {
+            // const response = await fetch(`https://juristechspace.com/api-quizz/users/${degree}/${topic}`)
+            const response = await fetch(`http://localhost/api-quizz/users/${degree}/${topic}`)
+            const users = await response.json()
+            set({ availableUsers: users })
+        },
+        degree: '',
+        topic: '',
+        partial: '',
+        user: '',
+        availableDegrees: [],
+        availableTopics: [],
+        availablePartials: [],
+        availableUsers: []
     }
 },{
     name: 'questions' //se puede agegar el lugar donde guardar, por default es localStorage

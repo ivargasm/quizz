@@ -1,7 +1,7 @@
-import { useQuestionStore } from "./store/questions"
+import { useQuestionStore } from "../store/questions"
 import { useEffect } from 'react'
 // eslint-disable-next-line react/prop-types
-export const Nav = () => {
+export const Nav = ({setMostrar}:any) => {
 
     const theme = useQuestionStore(state => state.theme)
     const toggleTheme = useQuestionStore(state => state.toggleTheme)
@@ -22,6 +22,7 @@ export const Nav = () => {
                     <button id="color-mode" onClick={toggleTheme}>
                         <i className="bi bi-circle-half"></i>
                     </button>
+                    <button onClick={() => setMostrar(true)}>Info <span className="wave">👋</span></button>
                 </div>
                 <div className="menu-btn">
                     <i className="fas fa-bars" id="navbtn"></i>
