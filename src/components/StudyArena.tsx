@@ -1,4 +1,4 @@
-// import { Modal } from "./Modal";
+// import { Modal } from "./Modal"
 import { useQuestionStore } from "../store/questions"
 import { SelectableCard } from "./CardDegree"
 import derechoImage from '../assets/derecho.jpeg'
@@ -16,7 +16,7 @@ interface DegreeImageMap {
 export const StudyArena = ({mostrar, setMostrar}:any) => {
 
     const LIMIT_QUESTIONS = 100
-    const [totalPreguntas, setTotalPreguntas] = useState(LIMIT_QUESTIONS);
+    const [totalPreguntas, setTotalPreguntas] = useState(LIMIT_QUESTIONS)
     const { selectDegree, availableDegrees, fetchAvailableDegrees, degree, topic, user, partial } = useQuestionStore()
     const [currentView, setCurrentView] = useState('viewDegrees')
     const [url, setUrl] = useState('')
@@ -26,28 +26,28 @@ export const StudyArena = ({mostrar, setMostrar}:any) => {
         "Derecho": derechoImage,
         "Sistemas": sistemasImage,
         //... Agrega otras carreras e imágenes si las tienes
-    };
+    }
     
 
     useEffect(() => {
         fetchAvailableDegrees()
         if(partial != ''){
-            // setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}/${partial}`);
-            setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}/${partial}`);
+            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}/${partial}`)
+            // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}/${partial}`);
         }else{
-            // setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}`);
-            setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}`);
+            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}`)
+            // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}`)
         } 
     }, [currentView, url, degree, topic, user, partial])
 
     const handleDegreeSelected = (degree_value: string) => {
         selectDegree(degree_value)
-        setCurrentView('viewTopics');
+        setCurrentView('viewTopics')
     }
 
     // obtener el numero de preguntas
     const handleInputChange = (event:any) => {
-        setTotalPreguntas(event.target.value);
+        setTotalPreguntas(event.target.value)
     }
 
     // obtener las preguntas
