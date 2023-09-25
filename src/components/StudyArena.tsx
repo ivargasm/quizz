@@ -65,7 +65,7 @@ export const StudyArena = ({mostrar, setMostrar}:any) => {
                 </div>
                 <Modal isOpen={mostrar} onClose={() => setMostrar(false)}>
                     ¡Hola comunidad de StudyQuizArena! Estamos buscando colaboradores apasionados que quieran contribuir y enriquecer nuestra base de cuestionarios. Si tienes conocimientos en alguna carrera o materia y te gustaría ayudar a otros a prepararse y evaluar sus conocimientos, ¡nos encantaría escuchar de ti! Tu colaboración puede marcar la diferencia en la preparación académica de muchos. Ponte en contacto con nosotros y sé parte de esta emocionante aventura educativa. ¡Gracias por ser parte de StudyQuizArena!
-                    <br /><a href="mailto:contacto@ismaelvm.xyz">contacto@ismaelvm.xyz</a>
+                    <br /><a href="mailto:contacto@juristechspace.com">contacto@juristechspace.com</a>
                 </Modal>
                 
             </div>
@@ -78,7 +78,7 @@ export const StudyArena = ({mostrar, setMostrar}:any) => {
                         onClick={() => handleDegreeSelected(degree['value'])}
                     />
                 ))}
-                </div>
+            </div>
             {currentView === 'viewTopics' && <Topics setCurrentView={setCurrentView}/>} 
             {currentView === 'viewUsers' && <Teachers setCurrentView={setCurrentView}/>}
             {currentView === 'viewPartials' && <Partials setCurrentView={setCurrentView}/>}
