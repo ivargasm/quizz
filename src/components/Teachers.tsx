@@ -19,8 +19,11 @@ export const Teachers = ({setCurrentView}: any) => {
             <h2 className="title-topics">Selecciona un profesor</h2>
             <div className="topics-container">
                 {availableUsers.map((user: any) => (
-                    <div className="topic" key={user.value} onClick={() => handleUserSelected(user.value)}>
+                    <div className="topic tooltip" key={user.value} onClick={() => handleUserSelected(user.value)}>
                         <h3>{user.label}</h3>
+                        <div className="tooltiptext">
+                            {user.name} ({user.type}).
+                        </div>
                     </div>
                 ))}
             </div>
