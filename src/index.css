@@ -344,6 +344,7 @@ h1.title{
   margin: 20px auto;
   background-color: var(--clr-bg-90);
   color: var(--clr-text);
+  text-wrap: balance;
 }
 
 .card-title {
