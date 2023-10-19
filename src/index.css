@@ -359,6 +359,9 @@ h1.title{
   padding: 10px !important;
   text-wrap: balance;
   font-size: 1.5em;
+  & .language-javascript{
+    text-wrap: balance !important;
+  }
   & span {
     border-radius: 5px;
   }
