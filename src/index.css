@@ -340,7 +340,7 @@ h1.title{
   padding: 20px;
   box-shadow: 0 2px 4px var(--clr-color-sadow);
   min-width: 400px;
-  max-width: 70%;
+  max-width: 50%;
   margin: 20px auto;
   background-color: var(--clr-bg-90);
   color: var(--clr-text);
@@ -357,6 +357,8 @@ h1.title{
 .code-block {
   border-radius: 5px 5px 0 0;
   padding: 10px !important;
+  text-wrap: balance;
+  font-size: 1.5em;
   & span {
     border-radius: 5px;
   }
@@ -725,6 +727,7 @@ h1.title{
 @media (max-width: 800px) {
   .card {
     min-width: 350px;
+    max-width: 70%;
   }
   
 }
