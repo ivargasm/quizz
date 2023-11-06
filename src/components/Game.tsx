@@ -10,11 +10,11 @@ const getBackgroundColor = (info: QuestionType, index: number) => { // obtener e
     // usuario aun no selcciona una respuesta
     if(userSelectedAnswer == null) return 'transparent'
     // ya selecciono una respuesta y es la incorrecta
-    if(index.toString() !== correctAnswer && index.toString() !== userSelectedAnswer) return '#transparent'
+    if(index.toString() != correctAnswer && index.toString() !== userSelectedAnswer) return '#transparent'
     // ya selecciono una respuesta y es la correcta
-    if(index.toString() === correctAnswer) return '#4caf50'
+    if(index.toString() == correctAnswer) return '#4caf50'
     // ya selecciono una respuesta y es la incorrecta
-    if(index.toString() === userSelectedAnswer) return '#f44336'
+    if(index.toString() == userSelectedAnswer) return '#f44336'
     // caso por defecto
     return 'transparent'
 }
