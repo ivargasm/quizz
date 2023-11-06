@@ -10,7 +10,7 @@ export const useQuestionData = () => {
     questions.forEach(question => {
         const { userSelectedAnswer, correctAnswer } = question
         if(userSelectedAnswer == null) unanswered++
-        else if(userSelectedAnswer === correctAnswer) correct++
+        else if(userSelectedAnswer == correctAnswer) correct++
         else incorrect++
     })
 
