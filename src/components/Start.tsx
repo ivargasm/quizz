@@ -35,8 +35,8 @@ export const Start = () => {
 
     // funcion para obtener valores desde la api
     const fetchFromApi = async (route:string, degree:string, topic:string, user:string) => {
-        // const response = await fetch(`https://juristechspace.com/api-quizz/${route}/${degree}/${topic}/${user}`);
-        const response = await fetch(`http://localhost/api-quizz/${route}/${degree}/${topic}/${user}`);
+        const response = await fetch(`https://juristechspace.com/api-quizz/${route}/${degree}/${topic}/${user}`);
+        // const response = await fetch(`http://localhost/api-quizz/${route}/${degree}/${topic}/${user}`);
         const data = await response.json();
         return data;
     }
@@ -93,11 +93,11 @@ export const Start = () => {
     useEffect(() => {
         // configurar la url
         if(partialSelected != ''){
-            // setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}/${partialSelected}`);
-            setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}/${partialSelected}`);
+            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}/${partialSelected}`);
+            // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}/${partialSelected}`);
         }else{
-            // setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}`);
-            setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}`);
+            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}`);
+            // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}`);
         }
 
         // obtener las carreras

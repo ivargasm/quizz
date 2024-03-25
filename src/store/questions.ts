@@ -140,28 +140,28 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
 
         fetchAvailableDegrees: async () => {
             // Suponiendo que tienes una API para esto:
-            // const response = await fetch('https://juristechspace.com/api-quizz/degrees/')
-            const response = await fetch('http://localhost/api-quizz/degrees/')
+            const response = await fetch('https://juristechspace.com/api-quizz/degrees/')
+            // const response = await fetch('http://localhost/api-quizz/degrees/')
             const degrees = await response.json()
             set({ availableDegrees: degrees })
         },
         
         fetchAvailableTopics: async (degree: string) => {
-            // const response = await fetch(`https://juristechspace.com/api-quizz/topics/${degree}`)
-            const response = await fetch(`http://localhost/api-quizz/topics/${degree}`)
+            const response = await fetch(`https://juristechspace.com/api-quizz/topics/${degree}`)
+            // const response = await fetch(`http://localhost/api-quizz/topics/${degree}`)
             const topics = await response.json()
             set({ availableTopics: topics })
         },
 
         fetchAvailableUsers: async (degree: string, topic: string) => {
-            // const response = await fetch(`https://juristechspace.com/api-quizz/users/${degree}/${topic}`)
-            const response = await fetch(`http://localhost/api-quizz/users/${degree}/${topic}`)
+            const response = await fetch(`https://juristechspace.com/api-quizz/users/${degree}/${topic}`)
+            // const response = await fetch(`http://localhost/api-quizz/users/${degree}/${topic}`)
             const users = await response.json()
             set({ availableUsers: users })
         },
         fetchAvailablePartials: async(degree: string, topic: string, user: string) => {
-            // const response  = await fetch(`https://juristechspace.com/api-quizz/partial/${degree}/${topic}/${user}`)
-            const response  = await fetch(`http://localhost/api-quizz/partial/${degree}/${topic}/${user}`)
+            const response  = await fetch(`https://juristechspace.com/api-quizz/partial/${degree}/${topic}/${user}`)
+            // const response  = await fetch(`http://localhost/api-quizz/partial/${degree}/${topic}/${user}`)
             const partials = await response.json()
             set({ availablePartials: partials })
         },
