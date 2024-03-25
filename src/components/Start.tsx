@@ -11,7 +11,8 @@ export const Start = () => {
     const [totalPreguntas, setTotalPreguntas] = useState(LIMIT_QUESTIONS);
     const [degree, setDegree] = useState('');
     const [topic, setTopic] = useState('');
-    const [partial, setPartial] = useState('');
+    const [partials, setPartials] = useState([]);
+    const [partialSelected, setPartialSelected] = useState('');
     const [user, setUser] = useState('');
     const [url, setUrl] = useState('');
     const [degrees, setDegrees] = useState([]);
@@ -34,27 +35,27 @@ export const Start = () => {
 
     // funcion para obtener valores desde la api
     const fetchFromApi = async (route:string, degree:string, topic:string, user:string) => {
-        const response = await fetch(`https://juristechspace.com/api-quizz/${route}/${degree}/${topic}/${user}`);
-        // const response = await fetch(`http://localhost/api-quizz/${route}/${degree}/${topic}/${user}`);
+        // const response = await fetch(`https://juristechspace.com/api-quizz/${route}/${degree}/${topic}/${user}`);
+        const response = await fetch(`http://localhost/api-quizz/${route}/${degree}/${topic}/${user}`);
         const data = await response.json();
         return data;
     }
 
     // obtener las parciales
-    const partials = [
-        {
-            value: '1',
-            label: '1',
-        },
-        {
-            value: '2',
-            label: '2',
-        },
-        {
-            value: '3',
-            label: '3',
-        },
-    ];
+    // const partials = [
+    //     {
+    //         value: '1',
+    //         label: '1',
+    //     },
+    //     {
+    //         value: '2',
+    //         label: '2',
+    //     },
+    //     {
+    //         value: '3',
+    //         label: '3',
+    //     },
+    // ];
 
     // obtener el numero de preguntas
     const handleInputChange = (event:any) => {
@@ -77,7 +78,7 @@ export const Start = () => {
 
     // obtener el parcial
     const handlePartialChange = (value_partial: string, value_id: string) => {
-        setPartial(value_id)
+        setPartialSelected(value_id)
         setSelectedOptionPartial(value_partial)
         setIsOpenPartial(false);
     }
@@ -91,12 +92,12 @@ export const Start = () => {
 
     useEffect(() => {
         // configurar la url
-        if(partial != ''){
-            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}/${partial}`);
-            // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}/${partial}`);
+        if(partialSelected != ''){
+            // setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}/${partialSelected}`);
+            setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}/${partialSelected}`);
         }else{
-            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}`);
-            // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}`);
+            // setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}`);
+            setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}`);
         }
 
         // obtener las carreras
@@ -114,11 +115,16 @@ export const Start = () => {
             setUsers(data);
         })
 
+        // obtener parciales
+        fetchFromApi('partial', degree, topic, user).then((data) => {
+            setPartials(data);
+        })
+
         document.addEventListener("click", closeDropdown);
         return () => {
             document.removeEventListener("click", closeDropdown);
         }
-    }, [url, degree, topic, partial, user]);
+    }, [url, degree, topic, partialSelected, user]);
 
     const closeDropdown = (event:any) => {
         if (dropdowndegree.current && !dropdowndegree.current.contains(event.target)) {
@@ -138,7 +144,7 @@ export const Start = () => {
         }
     };
 
-
+    console.log(partials)
 
 
     // obtener las preguntas
@@ -196,7 +202,7 @@ export const Start = () => {
                             {isOpenPartial && (
                                 <ul className="options-list">
                                     {partials.map((item) => (
-                                        <li data-value={item.value} key={item.value} onClick={() => handlePartialChange(item.label, item.value)}>{item.label}</li>
+                                        <li data-value={item['value']} key={item['value']} onClick={() => handlePartialChange(item['label'], item['value'])}>{item['label']}</li>
                                     ))}                        
                                 </ul>
                             )}
