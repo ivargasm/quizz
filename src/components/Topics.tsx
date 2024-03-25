@@ -20,11 +20,17 @@ export const Topics = ({setCurrentView}: any) => {
         <div className="content-stacks topics">
             <h2 className="title-topics">Selecciona un tema</h2>
             <div className="topics-container">
-                {availableTopics.map((topic: any) => (
+                {/* validar si availableTopics tiene informacion, si no tiene mostrar Cargando..., si tiene mostrar resultado */}
+                {availableTopics.length > 0 ? availableTopics.map((topic: any) => (
                     <div className="topic" key={topic.value} onClick={() => handleTopicSelected(topic.value)}>
                         <h3>{topic.label}</h3>
                     </div>
-                ))}
+                )) : <div className="loader"></div>}
+                {/* {availableTopics.map((topic: any) => (
+                    <div className="topic" key={topic.value} onClick={() => handleTopicSelected(topic.value)}>
+                        <h3>{topic.label}</h3>
+                    </div>
+                ))} */}
             </div>
             <button className="btn" onClick={back}>Regresar</button>
         </div>

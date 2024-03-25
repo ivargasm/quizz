@@ -119,13 +119,13 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         selectDegree: (degree: string) => {
             set({ degree })
             // Después de establecer un grado, puedes querer restablecer las otras selecciones:
-            set({ topic: '', user: '', partial: '' })
+            set({ topic: '', user: '', partial: '', availableTopics: [] })
         },
 
         selectTopic: (topic: string) => {
             set({ topic })
             // Después de establecer un tema, puedes querer restablecer las otras selecciones
-            set({ user: '', partial: '' })
+            set({ user: '', partial: '', availableUsers: [] })
         },
 
         selectPartial: (partial: string) => {
@@ -135,7 +135,7 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         selectUser: (user: string) => {
             set({ user })
             // Después de establecer un tema, puedes querer restablecer las otras selecciones
-            set({ partial: '' })
+            set({ partial: '', availablePartials: [] })
         },
 
         fetchAvailableDegrees: async () => {

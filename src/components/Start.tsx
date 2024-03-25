@@ -144,7 +144,7 @@ export const Start = () => {
         }
     };
 
-    console.log(partials)
+
 
 
     // obtener las preguntas

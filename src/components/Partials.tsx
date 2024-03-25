@@ -40,13 +40,14 @@ export const Partials = ({setCurrentView}: any) => {
         <div className="content-stacks partials">
             <h2 className="title-topics">Selecciona un parcial 'Opcional'</h2>
             <div className="topics-container">
-                {availablePartials.map((partial: any) => (
+                {/* validar si availablePartial tiene informacion, si no tiene mostrar Cargando..., si tiene mostrar resultado */}
+                {availablePartials.length > 0 ? availablePartials.map((partial: any) => (
                     <div className={`topic ${selectedPartial === partial.value ? 'selected' : ''}`}
                         key={partial.value}
                         onClick={() => handlePartialSelected(partial.value)}>
                         <h3>{partial.label}</h3>
                     </div>
-                ))}
+                )) : <div className="loader"></div>}
             </div>
             <button className="btn" onClick={() => setCurrentView("viewUsers")}>Volver</button>
         </div>
