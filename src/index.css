@@ -420,6 +420,23 @@ h1.title{
   font-size: 1.3em;
 }
 
+/* Textarea */
+.text_area{
+  width: 100%;
+}
+
+.text_area textarea{
+  resize: vertical;
+  width: 100%;
+  background-color: var(--clr-bg-card-code);
+  color: var(--clr-text);
+  border-radius: 5px;
+  min-height: 100px;
+  max-height: 200px;
+  form-sizing: content;
+  padding: 8px;
+}
+
 /* flchas de direccion */
 .nav-stack {
   display: flex;

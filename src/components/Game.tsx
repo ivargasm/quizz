@@ -3,12 +3,21 @@ import { type Question as QuestionType } from "../store/type"
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark, stackoverflowLight } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import { Footer } from "../Footer"
-import React from 'react'
+import React, { useState } from 'react'
 
 const getBackgroundColor = (info: QuestionType, index: number) => { // obtener el color de fondo de una respuesta
-    const { userSelectedAnswer, correctAnswer } = info
+    const { userSelectedAnswer, correctAnswer, isCorrectUserAnswer } = info
     // usuario aun no selcciona una respuesta
     if(userSelectedAnswer == null) return 'transparent'
+    // validar si la pregunta es abierta
+    if(info.is_open === 1){
+        // ya selecciono una respuesta y es la incorrecta
+        if(isCorrectUserAnswer) return '#4caf50'
+        // ya selecciono una respuesta y es la correcta
+        if(!isCorrectUserAnswer) return '#f44336'
+        // caso por defecto
+        return 'transparent'
+    }
     // ya selecciono una respuesta y es la incorrecta
     if(index.toString() != correctAnswer && index.toString() !== userSelectedAnswer) return '#transparent'
     // ya selecciono una respuesta y es la correcta
@@ -20,11 +29,17 @@ const getBackgroundColor = (info: QuestionType, index: number) => { // obtener e
 }
 
 const Question = ({ info }: { info: QuestionType }) => { // componente para mostrar una pregunta
+
+    const [userAnswer, setUserAnswer] = useState('');
     const selectAnswer = useQuestionStore(state => state.selectAnswer) // obtener la funcion para seleccionar una respuesta
     const createHandleClick = (answerIndex: string) => () =>{ // crear una funcion que selecciona una respuesta
         selectAnswer(info.id, answerIndex)
     }    
     let theme = useQuestionStore(state => state.theme) // obtener el tema
+
+    const handleAnswerChange = (event: { target: { value: React.SetStateAction<string> } }) => {
+        setUserAnswer(event.target.value);
+    };
     
     return(
         <>
@@ -35,35 +50,52 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
                         {info.code}
                     </SyntaxHighlighter>
                 }
-                <ul className="custom-list">
-                    {info.answers.map((answer, index) => (
-                        <li key={`${info.id}-${index}`} className="custom-list-item">
-                            <button 
-                                className={`custom-list-button ${info.userSelectedAnswer != null ? 'disabled' : ''}`} 
-                                onClick={createHandleClick(index.toString())} 
-                                style={{backgroundColor: getBackgroundColor(info, index)}}
+                {info.is_open === 0 
+                    ?  (
+                            <ul className="custom-list">
+                                {info.answers.map((answer, index) => (
+                                    <li key={`${info.id}-${index}`} className="custom-list-item">
+                                        <button 
+                                            className={`custom-list-button ${info.userSelectedAnswer != null ? 'disabled' : ''}`} 
+                                            onClick={createHandleClick(index.toString())} 
+                                            style={{backgroundColor: getBackgroundColor(info, index)}}
+                                            disabled={info.userSelectedAnswer != null}
+                                        >
+                                        {/* <span className="custom-list-text">{answer}</span> */}
+                                            <span className="custom-list-text">
+                                                {answer.split('\n').map((line, lineIndex) => (
+                                                    <React.Fragment key={lineIndex}>
+                                                        {line}
+                                                        {lineIndex !== answer.split('\n').length - 1 && <br />}
+                                                    </React.Fragment>
+                                                ))}
+                                            </span>
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+
+                    )
+                    : (
+                        <div className="text_area">
+                            <textarea placeholder="Ingresa tu respuesta" 
+                                onChange={handleAnswerChange}
+                                style={{backgroundColor: getBackgroundColor(info, 0)}}
                                 disabled={info.userSelectedAnswer != null}
+                                value={info.userSelectedAnswer}
                             >
-                            {/* <span className="custom-list-text">{answer}</span> */}
-                                <span className="custom-list-text">
-                                    {answer.split('\n').map((line, lineIndex) => (
-                                        <React.Fragment key={lineIndex}>
-                                            {line}
-                                            {lineIndex !== answer.split('\n').length - 1 && <br />}
-                                        </React.Fragment>
-                                    ))}
-                                </span>
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+                            </textarea>
+                            <button className="btn" onClick={createHandleClick(userAnswer)} disabled={info.userSelectedAnswer != null}>Enviar</button>
+                        </div>
+                    )
+                }
             </div>
         </>
     )
 }
 
 export const Game = () => {
-
+    
     const Questions = useQuestionStore(state => state.questions) // obtener las preguntas
     const currentQuestion = useQuestionStore(state => state.currentQuestion) // obtener la pregunta actual
     const questionInfo = Questions[currentQuestion] // obtener la info de la pregunta actual

@@ -27,6 +27,7 @@ export const Start = () => {
     const [selectedOptionPartial, setSelectedOptionPartial] = useState('Opción')
     const [selectedOptionUser, setSelectedOptionUser] = useState('Opción')
     const [mostrar, setMostrar] = useState(false)
+    const apir_url = useQuestionStore((state) => state.api_url)
     
     const dropdowndegree = useRef<any>(null)
     const dropdowntopic = useRef<any>(null)
@@ -35,27 +36,11 @@ export const Start = () => {
 
     // funcion para obtener valores desde la api
     const fetchFromApi = async (route:string, degree:string, topic:string, user:string) => {
-        const response = await fetch(`https://juristechspace.com/api-quizz/${route}/${degree}/${topic}/${user}`);
+        const response = await fetch(`${apir_url}${route}/${degree}/${topic}/${user}`);
         // const response = await fetch(`http://localhost/api-quizz/${route}/${degree}/${topic}/${user}`);
         const data = await response.json();
         return data;
     }
-
-    // obtener las parciales
-    // const partials = [
-    //     {
-    //         value: '1',
-    //         label: '1',
-    //     },
-    //     {
-    //         value: '2',
-    //         label: '2',
-    //     },
-    //     {
-    //         value: '3',
-    //         label: '3',
-    //     },
-    // ];
 
     // obtener el numero de preguntas
     const handleInputChange = (event:any) => {
@@ -93,10 +78,10 @@ export const Start = () => {
     useEffect(() => {
         // configurar la url
         if(partialSelected != ''){
-            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}/${partialSelected}`);
+            setUrl(`${apir_url}questions/${degree}/${topic}/${user}/${partialSelected}`);
             // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}/${partialSelected}`);
         }else{
-            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}`);
+            setUrl(`${apir_url}questions/${degree}/${topic}/${user}`);
             // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}`);
         }
 

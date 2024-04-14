@@ -4,6 +4,7 @@ export interface Question{
     code: string
     answers: string[]
     correctAnswer: string
+    is_open?: int
     userSelectedAnswer?: string
     isCorrectUserAnswer?: boolean
 }

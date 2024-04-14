@@ -35,6 +35,7 @@ interface State {
     fetchAvailableTopics: (degree: string) => Promise<void>
     fetchAvailableUsers: (degree: string, topic: string) => Promise<void>
     fetchAvailablePartials: (degree: string, topic: string, user: string) => Promise<void>
+    api_url: string
 }
 
 // crear el estado global
@@ -62,20 +63,75 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
             const questionIndex = newQuestions.findIndex(q => q.id === questionId)
             // recuperar la informacion
             const questionInfo = newQuestions[questionIndex]
-            // verificar pregunta correcta
-            const isCorrectUserAnswer = questionInfo.correctAnswer == answerIndex
-            if(isCorrectUserAnswer){
-                // lanzar confetti
-                confetti()
+            // verificar si la pregunta es abierta
+            if(questionInfo.is_open){
+                const calculateSimilarity = (str1:string, str2:string) => {
+                    const len1 = str1.length;
+                    const len2 = str2.length;
+                    const matrix = [];
+
+                    // Inicializar la matriz
+                    for (let i = 0; i <= len1; i++) {
+                        matrix[i] = [i];
+                    }
+                    for (let j = 0; j <= len2; j++) {
+                        matrix[0][j] = j;
+                    }
+
+                    // Calcular la distancia de edición
+                    for (let i = 1; i <= len1; i++) {
+                        for (let j = 1; j <= len2; j++) {
+                            const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+                            matrix[i][j] = Math.min(
+                                matrix[i - 1][j] + 1, // Eliminación
+                                matrix[i][j - 1] + 1, // Inserción
+                                matrix[i - 1][j - 1] + cost // Sustitución
+                            );
+                        }
+                    }
+
+                    // Calcular la similitud
+                    const maxLen = Math.max(len1, len2);
+                    const similarity = 1 - matrix[len1][len2] / maxLen;
+                    
+                    return similarity;
+                }
+
+                const similarity = calculateSimilarity(answerIndex.trim().toLowerCase(), questionInfo.answers[0].trim().toLowerCase());
+                console.log(similarity)
+                const isCorrectUserAnswer = (similarity > 0.5) ? true : false;
+                console.log(isCorrectUserAnswer)
+                // verificar pregunta correcta
+                if(isCorrectUserAnswer){
+                    // lanzar confetti
+                    confetti()
+                }
+
+                // cambiar la informacion en la copia de las preguntas
+                newQuestions[questionIndex] = {
+                    ...questionInfo,
+                    isCorrectUserAnswer,
+                    userSelectedAnswer: answerIndex,
+                }
+
+                set({questions: newQuestions})
+            } else {
+                // verificar pregunta correcta
+                const isCorrectUserAnswer = questionInfo.correctAnswer == answerIndex
+                if(isCorrectUserAnswer){
+                    // lanzar confetti
+                    confetti()
+                }
+                // cambiar la informacion en la copia de las preguntas
+                newQuestions[questionIndex] = {
+                    ...questionInfo,
+                    isCorrectUserAnswer,
+                    userSelectedAnswer: answerIndex,
+                }
+                // enviar la informacion al estado global
+                set({questions: newQuestions})
+
             }
-            // cambiar la informacion en la copia de las preguntas
-            newQuestions[questionIndex] = {
-                ...questionInfo,
-                isCorrectUserAnswer,
-                userSelectedAnswer: answerIndex,
-            }
-            // enviar la informacion al estado global
-            set({questions: newQuestions})
         },
 
         goNextQuestion: () => {
@@ -140,27 +196,27 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
 
         fetchAvailableDegrees: async () => {
             // Suponiendo que tienes una API para esto:
-            const response = await fetch('https://juristechspace.com/api-quizz/degrees/')
+            const response = await fetch(`${get().api_url}degrees/`)
             // const response = await fetch('http://localhost/api-quizz/degrees/')
             const degrees = await response.json()
             set({ availableDegrees: degrees })
         },
         
         fetchAvailableTopics: async (degree: string) => {
-            const response = await fetch(`https://juristechspace.com/api-quizz/topics/${degree}`)
+            const response = await fetch(`${get().api_url}topics/${degree}`)
             // const response = await fetch(`http://localhost/api-quizz/topics/${degree}`)
             const topics = await response.json()
             set({ availableTopics: topics })
         },
 
         fetchAvailableUsers: async (degree: string, topic: string) => {
-            const response = await fetch(`https://juristechspace.com/api-quizz/users/${degree}/${topic}`)
+            const response = await fetch(`${get().api_url}users/${degree}/${topic}`)
             // const response = await fetch(`http://localhost/api-quizz/users/${degree}/${topic}`)
             const users = await response.json()
             set({ availableUsers: users })
         },
         fetchAvailablePartials: async(degree: string, topic: string, user: string) => {
-            const response  = await fetch(`https://juristechspace.com/api-quizz/partial/${degree}/${topic}/${user}`)
+            const response  = await fetch(`${get().api_url}partial/${degree}/${topic}/${user}`)
             // const response  = await fetch(`http://localhost/api-quizz/partial/${degree}/${topic}/${user}`)
             const partials = await response.json()
             set({ availablePartials: partials })
@@ -172,7 +228,8 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         availableDegrees: [],
         availableTopics: [],
         availablePartials: [],
-        availableUsers: []
+        availableUsers: [],
+        api_url: 'https://studyquizarena.netlify.app/'
     }
 },{
     name: 'questions' //se puede agegar el lugar donde guardar, por default es localStorage

@@ -17,7 +17,7 @@ export const StudyArena = ({mostrar, setMostrar}:any) => {
 
     const LIMIT_QUESTIONS = 100
     const [totalPreguntas, setTotalPreguntas] = useState(LIMIT_QUESTIONS)
-    const { selectDegree, availableDegrees, fetchAvailableDegrees, degree, topic, user, partial } = useQuestionStore()
+    const { selectDegree, availableDegrees, fetchAvailableDegrees, degree, topic, user, partial, api_url } = useQuestionStore()
     const [currentView, setCurrentView] = useState('viewDegrees')
     const [url, setUrl] = useState('')
 
@@ -32,10 +32,10 @@ export const StudyArena = ({mostrar, setMostrar}:any) => {
     useEffect(() => {
         fetchAvailableDegrees()
         if(partial != ''){
-            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}/${partial}`)
+            setUrl(`${api_url}questions/${degree}/${topic}/${user}/${partial}`)
             // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}/${partial}`);
         }else{
-            setUrl(`https://juristechspace.com/api-quizz/questions/${degree}/${topic}/${user}`)
+            setUrl(`${api_url}questions/${degree}/${topic}/${user}`)
             // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}`)
         } 
     }, [currentView, url, degree, topic, user, partial])
