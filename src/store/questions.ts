@@ -229,7 +229,7 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         availableTopics: [],
         availablePartials: [],
         availableUsers: [],
-        api_url: 'https://studyquizarena.netlify.app/'
+        api_url: 'https://juristechspace.com/api-quizz/'
     }
 },{
     name: 'questions' //se puede agegar el lugar donde guardar, por default es localStorage
