@@ -1,8 +1,8 @@
 // import { Modal } from "./Modal"
 import { useQuestionStore } from "../store/questions"
 import { SelectableCard } from "./CardDegree"
-import derechoImage from '../assets/derecho.jpeg'
-import sistemasImage from '../assets/sistemas.jpeg'
+// import derechoImage from '../assets/derecho.jpeg'
+// import sistemasImage from '../assets/sistemas.jpeg'
 import { useEffect, useState } from "react"
 import { Topics } from "../components/Topics"
 import { Teachers } from "../components/Teachers"
@@ -23,8 +23,8 @@ export const StudyArena = ({mostrar, setMostrar}:any) => {
 
 
     const degreeImages: DegreeImageMap  = {
-        "Derecho": derechoImage,
-        "Sistemas": sistemasImage,
+        "Derecho": 'https://res.cloudinary.com/ivargasm/image/upload/v1713122104/study-quizz/derecho.jpg',
+        "Sistemas": 'https://res.cloudinary.com/ivargasm/image/upload/v1713122104/study-quizz/sistemas.jpg',
         //... Agrega otras carreras e imágenes si las tienes
     }
     

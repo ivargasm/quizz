@@ -12,9 +12,9 @@ const getBackgroundColor = (info: QuestionType, index: number) => { // obtener e
     // validar si la pregunta es abierta
     if(info.is_open === 1){
         // ya selecciono una respuesta y es la incorrecta
-        if(isCorrectUserAnswer) return '#4caf50'
+        if(!isCorrectUserAnswer) return '#94241c'
         // ya selecciono una respuesta y es la correcta
-        if(!isCorrectUserAnswer) return '#f44336'
+        if(isCorrectUserAnswer) return '#377339'
         // caso por defecto
         return 'transparent'
     }
@@ -30,9 +30,17 @@ const getBackgroundColor = (info: QuestionType, index: number) => { // obtener e
 
 const Question = ({ info }: { info: QuestionType }) => { // componente para mostrar una pregunta
 
-    const [userAnswer, setUserAnswer] = useState('');
+    const [userAnswer, setUserAnswer] = useState('')
+    const [loader, setLoader] = useState(false)
     const selectAnswer = useQuestionStore(state => state.selectAnswer) // obtener la funcion para seleccionar una respuesta
     const createHandleClick = (answerIndex: string) => () =>{ // crear una funcion que selecciona una respuesta
+        // validar is info.is_open === 1 poner loader en true
+        if(info.is_open === 1) {
+            setLoader(true)
+            setTimeout(() => {
+                setLoader(false)
+            }, 2000)
+        }
         selectAnswer(info.id, answerIndex)
     }    
     let theme = useQuestionStore(state => state.theme) // obtener el tema
@@ -85,7 +93,16 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
                                 value={info.userSelectedAnswer}
                             >
                             </textarea>
-                            <button className="btn" onClick={createHandleClick(userAnswer)} disabled={info.userSelectedAnswer != null}>Enviar</button>
+                            <div>
+                                <button className="btn" onClick={createHandleClick(userAnswer)} disabled={info.userSelectedAnswer != null}>Enviar</button>
+                                {loader && info.userSelectedAnswer == null &&
+                                    <div className="loader"></div>
+                                }
+                            </div>
+                            {info.userSelectedAnswer != null &&
+                                <div className="correct_answer">{info.answers[0]}</div>
+
+                            }
                         </div>
                     )
                 }

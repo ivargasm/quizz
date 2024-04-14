@@ -429,12 +429,29 @@ h1.title{
   resize: vertical;
   width: 100%;
   background-color: var(--clr-bg-card-code);
-  color: var(--clr-text);
+  color: #D6D6D6;
   border-radius: 5px;
   min-height: 100px;
   max-height: 200px;
   form-sizing: content;
   padding: 8px;
+}
+
+.text_area .correct_answer{
+  padding: 5px;
+  margin-top: 10px;
+  border-radius: 5px;
+  color: var(--clr-text);
+  background-color: var(--clr-bg-card-code);
+  text-wrap: balance;
+  text-align: center;
+}
+
+.text_area div{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 /* flchas de direccion */
