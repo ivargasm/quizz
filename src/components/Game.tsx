@@ -70,7 +70,7 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
                                             disabled={info.userSelectedAnswer != null}
                                         >
                                         {/* <span className="custom-list-text">{answer}</span> */}
-                                            <span className="custom-list-text">
+                                            <span className="custom-list-text" style={{ whiteSpace: 'pre-line' }}>
                                                 {answer.split('\n').map((line, lineIndex) => (
                                                     <React.Fragment key={lineIndex}>
                                                         {line}
