@@ -16,7 +16,7 @@ export const Teachers = ({setCurrentView}: any) => {
 
     return (
         <div className="content-stacks topics">
-            <h2 className="title-topics">Selecciona un profesor</h2>
+            <h2 className="title-topics">Selecciona un colaborador</h2>
             <div className="topics-container">
                 {/* validar si availableUsers tiene informacion, si no tiene mostrar Cargando..., si tiene mostrar resultado */}
                 {availableUsers.length > 0 ? availableUsers.map((user: any) => (
