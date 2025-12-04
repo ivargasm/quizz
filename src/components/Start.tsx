@@ -37,7 +37,6 @@ export const Start = () => {
     // funcion para obtener valores desde la api
     const fetchFromApi = async (route:string, degree:string, topic:string, user:string) => {
         const response = await fetch(`${apir_url}${route}/${degree}/${topic}/${user}`);
-        // const response = await fetch(`http://localhost/api-quizz/${route}/${degree}/${topic}/${user}`);
         const data = await response.json();
         return data;
     }

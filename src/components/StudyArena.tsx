@@ -20,23 +20,36 @@ export const StudyArena = ({mostrar, setMostrar}:any) => {
     const { selectDegree, availableDegrees, fetchAvailableDegrees, degree, topic, user, partial, api_url } = useQuestionStore()
     const [currentView, setCurrentView] = useState('viewDegrees')
     const [url, setUrl] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
 
     const degreeImages: DegreeImageMap  = {
         "Derecho": 'https://res.cloudinary.com/ivargasm/image/upload/v1713122104/study-quizz/derecho.jpg',
         "Sistemas": 'https://res.cloudinary.com/ivargasm/image/upload/v1713122104/study-quizz/sistemas.jpg',
-        //... Agrega otras carreras e imágenes si las tienes
     }
+    
+    const defaultImage = 'https://via.placeholder.com/300x200?text=No+Image'
+
     
 
     useEffect(() => {
-        fetchAvailableDegrees()
-        if(partial != ''){
+        const loadDegrees = async () => {
+            setIsLoading(true)
+            try {
+                await fetchAvailableDegrees()
+            } catch (error) {
+                console.error('Error loading degrees:', error)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+        
+        loadDegrees()
+        
+        if(partial && partial !== ''){
             setUrl(`${api_url}questions/${degree}/${topic}/${user}/${partial}`)
-            // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}/${partial}`);
         }else{
             setUrl(`${api_url}questions/${degree}/${topic}/${user}`)
-            // setUrl(`http://localhost/api-quizz/questions/${degree}/${topic}/${user}`)
         } 
     }, [currentView, url, degree, topic, user, partial])
 
@@ -70,14 +83,22 @@ export const StudyArena = ({mostrar, setMostrar}:any) => {
                 
             </div>
             <div className="card-category">
-                {currentView === 'viewDegrees' && availableDegrees.map((degree) => (
-                    <SelectableCard
-                        key={degree['value']}
-                        title={degree['label']}
-                        imageSrc={degreeImages[degree['label']]}
-                        onClick={() => handleDegreeSelected(degree['value'])}
-                    />
-                ))}
+                {currentView === 'viewDegrees' && (
+                    isLoading ? (
+                        <div>Cargando carreras...</div>
+                    ) : Array.isArray(availableDegrees) && availableDegrees.length > 0 ? (
+                        availableDegrees.map((degree, index) => (
+                            <SelectableCard
+                                key={degree.code || index}
+                                title={degree.description}
+                                imageSrc={degreeImages[degree.description] || defaultImage}
+                                onClick={() => handleDegreeSelected(degree.id.toString())}
+                            />
+                        ))
+                    ) : (
+                        <div>No hay carreras disponibles. Verifica la conexión con el servidor.</div>
+                    )
+                )}
             </div>
             {currentView === 'viewTopics' && <Topics setCurrentView={setCurrentView}/>} 
             {currentView === 'viewUsers' && <Teachers setCurrentView={setCurrentView}/>}

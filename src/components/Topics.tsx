@@ -21,16 +21,11 @@ export const Topics = ({setCurrentView}: any) => {
             <h2 className="title-topics">Selecciona un tema</h2>
             <div className="topics-container">
                 {/* validar si availableTopics tiene informacion, si no tiene mostrar Cargando..., si tiene mostrar resultado */}
-                {availableTopics.length > 0 ? availableTopics.map((topic: any) => (
-                    <div className="topic" key={topic.value} onClick={() => handleTopicSelected(topic.value)}>
-                        <h3>{topic.label}</h3>
+                {availableTopics.length > 0 ? availableTopics.map((topic: any, index: number) => (
+                    <div className="topic" key={topic.id || index} onClick={() => handleTopicSelected(topic.id)}>
+                        <h3>{topic.description}</h3>
                     </div>
                 )) : <div className="loader"></div>}
-                {/* {availableTopics.map((topic: any) => (
-                    <div className="topic" key={topic.value} onClick={() => handleTopicSelected(topic.value)}>
-                        <h3>{topic.label}</h3>
-                    </div>
-                ))} */}
             </div>
             <button className="btn" onClick={back}>Regresar</button>
         </div>

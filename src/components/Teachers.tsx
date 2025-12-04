@@ -19,9 +19,9 @@ export const Teachers = ({setCurrentView}: any) => {
             <h2 className="title-topics">Selecciona un colaborador</h2>
             <div className="topics-container">
                 {/* validar si availableUsers tiene informacion, si no tiene mostrar Cargando..., si tiene mostrar resultado */}
-                {availableUsers.length > 0 ? availableUsers.map((user: any) => (
-                    <div className="topic tooltip" key={user.value} onClick={() => handleUserSelected(user.value)}>
-                        <h3>{user.label}</h3>
+                {availableUsers.length > 0 ? availableUsers.map((user: any, index: number) => (
+                    <div className="topic tooltip" key={user.id || index} onClick={() => handleUserSelected(user.id)}>
+                        <h3>{user.name}</h3>
                         <div className="tooltiptext">
                             {user.name} ({user.type}).
                         </div>

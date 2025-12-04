@@ -4,8 +4,11 @@ import confetti from 'canvas-confetti'
 import { persist } from 'zustand/middleware'
 
 interface Degree {
-    value: string;
-    label: string;
+    id: number;
+    code: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
 }
 
 
@@ -19,7 +22,7 @@ interface State {
     reset: () => void
     toggleTheme: () => void
     theme: string
-    degree: string
+    degree: string // ID del degree como string
     topic: string
     partial: string
     user: string
@@ -75,9 +78,11 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
                     body: JSON.stringify({ "question":questionInfo.question, "userAnswer":answerIndex })
                 })
 
-                // parsear respusta
-                const is_correct_answer = await response.json()
-                const isCorrectUserAnswer = (is_correct_answer === 'correcto') ? true : false;
+                // parsear respuesta
+                const data = await response.json()
+                // extraer el valor de correct del JSON dentro de validation
+                const validationMatch = data.validation.match(/"correct":\s*(true|false)/)
+                const isCorrectUserAnswer = validationMatch ? validationMatch[1] === 'true' : false
                 // verificar pregunta correcta
                 if(isCorrectUserAnswer){
                     // lanzar confetti
@@ -173,10 +178,19 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         },
 
         fetchAvailableDegrees: async () => {
-            // Suponiendo que tienes una API para esto:
-            const response = await fetch(`${get().api_url}degrees/`)
-            const degrees = await response.json()
-            set({ availableDegrees: degrees })
+            try {
+                const response = await fetch(`${get().api_url}degrees/`)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`)
+                }
+                const degrees = await response.json()
+                // Asegurar que degrees sea un array
+                const degreesArray = Array.isArray(degrees) ? degrees : []
+                set({ availableDegrees: degreesArray })
+            } catch (error) {
+                console.error('Error fetching degrees:', error)
+                set({ availableDegrees: [] })
+            }
         },
 
         fetchAvailableTopics: async (degree: string) => {
@@ -203,7 +217,8 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         availableTopics: [],
         availablePartials: [],
         availableUsers: [],
-        api_url: 'https://juristechspace.com/api-quizz/'
+        // api_url: 'https://juristechspace.com/api-quizz/'
+        api_url: 'http://localhost:8000/api-quizz'
     }
 }, {
     name: 'questions' //se puede agegar el lugar donde guardar, por default es localStorage

@@ -10,7 +10,7 @@ const getBackgroundColor = (info: QuestionType, index: number) => { // obtener e
     // usuario aun no selcciona una respuesta
     if(userSelectedAnswer == null) return 'transparent'
     // validar si la pregunta es abierta
-    if(info.is_open === 1){
+    if(info.is_open === true || info.is_open === 1){
         // ya selecciono una respuesta y es la incorrecta
         if(!isCorrectUserAnswer) return '#94241c'
         // ya selecciono una respuesta y es la correcta
@@ -35,7 +35,7 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
     const selectAnswer = useQuestionStore(state => state.selectAnswer) // obtener la funcion para seleccionar una respuesta
     const createHandleClick = (answerIndex: string) => () =>{ // crear una funcion que selecciona una respuesta
         // validar is info.is_open === 1 poner loader en true
-        if(info.is_open === 1) {
+        if(info.is_open === true || info.is_open === 1) {
             setLoader(true)
             setTimeout(() => {
                 setLoader(false)
@@ -53,12 +53,12 @@ const Question = ({ info }: { info: QuestionType }) => { // componente para most
         <>
             <div className="card">
                 <h2 className="card-title">{info.question}</h2>
-                {info.code != null && 
+                {(info.code != null && info.code !== '') && 
                     <SyntaxHighlighter language='javascript' style={theme === 'light' ? stackoverflowLight : atomOneDark} className='code-block'>
                         {info.code}
                     </SyntaxHighlighter>
                 }
-                {info.is_open === 0 
+                {info.is_open === false || info.is_open === 0 
                     ?  (
                             <ul className="custom-list">
                                 {info.answers.map((answer, index) => (

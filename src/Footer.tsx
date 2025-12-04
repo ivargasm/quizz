@@ -29,8 +29,6 @@ export const Footer = () => {
                 </button>
             </div>
             <Modal isOpen={mostrarModal} onClose={() => setMostrarModal(false)}>
-                <p></p>
-                {/* validar resultado y mostrar mensajes, si resultado > 80: bien hecho, si esta entre 60 y 79: puesdes mejorar y < 60: esfuerzate mas */}
                 {resultado > 80 ? 'Bien hecho!' : resultado > 60 ? 'Puesdes mejorar!' : 'Esfuerzate mas!'}
                 <br />
                 <strong>{`Tu resultado es: ${resultado.toFixed(2)}%`}</strong>

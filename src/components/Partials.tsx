@@ -5,22 +5,6 @@ export const Partials = ({setCurrentView}: any) => {
 
     const {degree, topic, user, availablePartials, fetchAvailablePartials } = useQuestionStore()
 
-    // obtener las parciales
-    // const partials = [
-    //     {
-    //         value: '1',
-    //         label: '1',
-    //     },
-    //     {
-    //         value: '2',
-    //         label: '2',
-    //     },
-    //     {
-    //         value: '3',
-    //         label: '3',
-    //     },
-    // ]
-
     const {selectPartial } = useQuestionStore()
     const [selectedPartial, setSelectedPartial] = useState<string | null>(null);
 
@@ -41,11 +25,11 @@ export const Partials = ({setCurrentView}: any) => {
             <h2 className="title-topics">Selecciona un parcial 'Opcional'</h2>
             <div className="topics-container">
                 {/* validar si availablePartial tiene informacion, si no tiene mostrar Cargando..., si tiene mostrar resultado */}
-                {availablePartials.length > 0 ? availablePartials.map((partial: any) => (
-                    <div className={`topic ${selectedPartial === partial.value ? 'selected' : ''}`}
-                        key={partial.value}
-                        onClick={() => handlePartialSelected(partial.value)}>
-                        <h3>{partial.label}</h3>
+                {availablePartials.length > 0 ? availablePartials.map((partial: any, index: number) => (
+                    <div className={`topic ${selectedPartial === partial.partial ? 'selected' : ''}`}
+                        key={partial.partial || index}
+                        onClick={() => handlePartialSelected(partial.partial)}>
+                        <h3>{partial.partial}</h3>
                     </div>
                 )) : <div className="loader"></div>}
             </div>

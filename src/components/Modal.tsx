@@ -30,9 +30,9 @@ export const Modal = ({isOpen, onClose, children}:ModalProps) => {
         <div className="modal" id="modal" style={{display: isOpen ? 'flex' : 'none'}}>
             <div className="modal-content" id="modal-content">
                 <p className="modal-title">Hola <span className="wave">👋</span></p>
-                <p>
+                <div>
                     {children}                    
-                </p>
+                </div>
                 <button className="close-modal" id="close-modal" onClick={() => closeView()}>❌</button>
             </div>
         </div>
