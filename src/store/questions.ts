@@ -217,7 +217,7 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         availableTopics: [],
         availablePartials: [],
         availableUsers: [],
-        api_url: 'https://api.juristechspace.com/api-quizz'
+        api_url: 'https://api.juristechspace.com/api-quizz/'
         // api_url: 'http://localhost:8000/api-quizz'
     }
 }, {
