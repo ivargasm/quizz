@@ -196,7 +196,9 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         fetchAvailableTopics: async (degree: string) => {
             const response = await fetch(`${get().api_url}topics/${degree}`)
             const topics = await response.json()
-            set({ availableTopics: topics })
+            // Ordenar en orden descendente (última creada primero)
+            const sortedTopics = topics.sort((a: any, b: any) => b.id - a.id)
+            set({ availableTopics: sortedTopics })
         },
 
         fetchAvailableUsers: async (degree: string, topic: string) => {
@@ -207,7 +209,13 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
         fetchAvailablePartials: async (degree: string, topic: string, user: string) => {
             const response = await fetch(`${get().api_url}partial/${degree}/${topic}/${user}`)
             const partials = await response.json()
-            set({ availablePartials: partials })
+            // Ordenar en orden ascendente
+            const sortedPartials = partials.sort((a: any, b: any) => {
+                const numA = parseInt(a.partial) || 0
+                const numB = parseInt(b.partial) || 0
+                return numA - numB
+            })
+            set({ availablePartials: sortedPartials })
         },
         degree: '',
         topic: '',
