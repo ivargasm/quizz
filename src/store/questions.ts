@@ -70,7 +70,7 @@ export const useQuestionStore = create<State>()(persist((set, get) => {
             if (questionInfo.is_open) {
 
                 // enviar peticion post al server con los datos de answerIndex y questionInfo.answers[0]
-                const response = await fetch(`${get().api_url}validate_question`, {
+                const response = await fetch(`${get().api_url}validate_question/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
