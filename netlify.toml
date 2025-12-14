@@ -2,3 +2,23 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# 1. Regla para el archivo HTML (El que carga tu App)
+# Le decimos: "Nunca lo guardes en caché. Siempre pregunta al servidor".
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# 2. Regla para el archivo Manifest y Service Workers (si los hubiera)
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# 3. Regla para los archivos JS y CSS (Los que tienen hash en el nombre)
+# Estos SÍ queremos que se guarden por siempre, porque si cambian, cambian de nombre.
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
